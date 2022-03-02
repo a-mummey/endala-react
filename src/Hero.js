@@ -1,5 +1,16 @@
 import "./Hero.css";
 import MintButton from "./MintButton";
+import { useRecoilValue } from "recoil";
+import { keplrState } from "./state";
+
+function ShowMint(props) {
+  const keplrValue = useRecoilValue(keplrState);
+  if (keplrValue == "not_exists") {
+    return <h3>Please install Keplr extension</h3>;
+  } else {
+    return <MintButton></MintButton>;
+  }
+}
 
 function Hero() {
   return (
@@ -11,7 +22,7 @@ function Hero() {
             <h2>A Stargaze NFT Project</h2>
           </hgroup>
           <p>
-            <MintButton></MintButton>
+            <ShowMint></ShowMint>
           </p>
         </div>
         <div id="mint-progress-wrap" className="container">
