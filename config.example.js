@@ -12,6 +12,7 @@ module.exports = {
     thumbFiletype: ".jpg", // UPDATE ME to Your total mints
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
+    fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster (but this could also be an IPFS url)
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
@@ -29,6 +30,7 @@ module.exports = {
     thumbFiletype: ".jpg",
     metadataType: ".json",
     rarityType: ".json", // UPDATE ME to Your total mints
+    fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/main/thumbnails",
     fileUrlMetadata: "https://files.endala.xyz/main/metadata",
     fileUrlRarities: "https://files.endala.xyz/main/rarities",

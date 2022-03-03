@@ -12,6 +12,7 @@ const configBase = {
     thumbFiletype: ".jpg", // UPDATE ME to Your total mints
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
+    fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
@@ -29,6 +30,7 @@ const configBase = {
     thumbFiletype: ".jpg", // UPDATE ME to Your total mints
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
+    fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails",
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/testnet/rarities",

@@ -3,6 +3,7 @@ import "./Hero.css";
 import MintButton from "./MintButton";
 import ProgressBar from "./ProgressBar";
 import { keplrState } from "./state";
+import config from "./config";
 
 function ShowMint(props) {
   const keplrValue = useRecoilValue(keplrState("state"));
@@ -14,8 +15,15 @@ function ShowMint(props) {
 }
 
 function Hero() {
+  const randInt = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+  const heroStyle = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url("${config.fileBase}hero/hero${randInt}.jpg"`;
+  console.log(heroStyle);
   return (
-    <div className="hero" data-theme="dark">
+    <div
+      className="hero"
+      data-theme="dark"
+      style={{ backgroundImage: heroStyle }}
+    >
       <header className="container">
         <div>
           <hgroup>
