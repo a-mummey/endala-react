@@ -1,8 +1,10 @@
+import { useRecoilValue } from "recoil";
+import config from "./config";
 import "./Hero.css";
 import MintButton from "./MintButton";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { keplrState, mintedCountState } from "./state";
-import config from "./config";
+import ProgressBar from "./ProgressBar";
+import { keplrState } from "./state";
+import TestInstructions from "./TestInstructions";
 
 function ShowMint(props) {
   const keplrValue = useRecoilValue(keplrState("state"));
@@ -14,21 +16,8 @@ function ShowMint(props) {
 }
 
 function Hero() {
-  const mintedCount = useRecoilValue(mintedCountState);
-  const mintedCountVal = mintedCount == "?" ? 0 : mintedCount;
-  const totalMints = config.totalNumMints;
   const testMessage = config.testnet ? (
-    <p>
-      For testnet, please accept the Keplr request to add the testnet. Then
-      ensure you fund your testnet wallet from the&nbsp;
-      <a
-        href="https://discord.com/channels/755548171941445642/940653213022031912"
-        target="_blank"
-      >
-        faucet
-      </a>
-      .
-    </p>
+    <TestInstructions></TestInstructions>
   ) : (
     ""
   );
@@ -45,17 +34,8 @@ function Hero() {
             <ShowMint></ShowMint>
           </p>
         </div>
-        <div id="mint-progress-wrap" className="container">
-          <div className="progress-header">
-            Endalas Minted: {mintedCount} / {totalMints}
-            <progress
-              id="mint-progress-bar"
-              value={mintedCountVal}
-              max={totalMints}
-            ></progress>
-          </div>
-        </div>
-        {testMessage}
+        <ProgressBar></ProgressBar>
+        <article>{testMessage}</article>
       </header>
     </div>
   );

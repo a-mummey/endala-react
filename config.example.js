@@ -9,10 +9,12 @@ module.exports = {
     minter: "stars1jc4gk0ua02kvrpggat77r25226h6hg5rrfwlywu7zclkdscjwlhqd56hmm", // UPDATE ME to your testnet contract
     mintPriceStars: 200, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".jpg",
-    fileUrlThumbnails: "http://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster
-    fileUrlMetadata: "http://files.endala.xyz/testnet/metadata",
-    fileUrlRarities: "http://files.endala.xyz/testnet/rarities",
+    thumbFiletype: ".jpg", // UPDATE ME to Your total mints
+    metadataType: ".json", // UPDATE ME to Your total mints
+    rarityType: ".json", // UPDATE ME to Your total mints
+    fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster (but this could also be an IPFS url)
+    fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
+    fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
   },
   // Production Values
   production: {
@@ -24,9 +26,12 @@ module.exports = {
     minter: "stars1...", // UPDATE ME to your production contract
     mintPriceStars: 200, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    fileUrlThumbnails: "http://files.endala.xyz/main/thumbnails",
-    fileUrlMetadata: "http://files.endala.xyz/main/metadata",
-    fileUrlRarities: "http://files.endala.xyz/main/rarities",
+    thumbFiletype: ".jpg",
+    metadataType: ".json",
+    rarityType: ".json", // UPDATE ME to Your total mints
+    fileUrlThumbnails: "https://files.endala.xyz/main/thumbnails",
+    fileUrlMetadata: "https://files.endala.xyz/main/metadata",
+    fileUrlRarities: "https://files.endala.xyz/main/rarities",
   },
   useTestnet: true, // Set to false on production
 };

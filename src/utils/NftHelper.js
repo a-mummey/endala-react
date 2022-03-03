@@ -10,10 +10,10 @@ class NftHelper {
 
   getNftData = async (tokenId) => {
     const rarityP = await window.fetch(
-      `${this.config.fileUrlRarities}/${tokenId}.json`
+      `${this.config.fileUrlRarities}/${tokenId}${this.config.rarityType}`
     );
     const metaP = await window.fetch(
-      `${this.config.fileUrlMetadata}/${tokenId}.json`
+      `${this.config.fileUrlMetadata}/${tokenId}${this.config.metadataType}`
     );
 
     const rarity = await rarityP.json();

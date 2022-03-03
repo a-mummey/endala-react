@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Hero from "./Hero";
 import MintBody from "./MintBody";
+import Nav from "./Nav";
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { keplrState, mintedCountState } from "./state";
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <div className="App">
+      <Nav></Nav>
       <Hero></Hero>
       <MintBody></MintBody>
     </div>

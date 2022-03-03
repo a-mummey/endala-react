@@ -56,6 +56,7 @@ function MintButton() {
   return (
     <button
       className="mintButton"
+      aria-busy={buttonState.disabled}
       role="button"
       disabled={buttonState.disabled}
       onClick={Mint}
