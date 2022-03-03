@@ -1,14 +1,18 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { mintedTokenInfo } from "./state";
+import { mintedTokenInfo, keplrState } from "./state";
 import "./MintBody.css";
 
 function MintBody() {
   let nftData;
+  const setTokenId = useSetRecoilState(keplrState("tokenId"));
   const loadable = useRecoilValueLoadable(mintedTokenInfo);
   console.log(loadable);
   if (loadable.state == "hasValue") {
     nftData = loadable.contents;
   }
+  const CloseModal = () => {
+    setTokenId(null);
+  };
 
   //   const mintedNft = null;
   if (nftData && nftData.meta) {
@@ -17,7 +21,12 @@ function MintBody() {
         <dialog className="minted-wrap" open>
           <article>
             <header>
-              <a href="#close" aria-label="Close" className="close"></a>
+              <a
+                href="#close"
+                aria-label="Close"
+                className="close"
+                onClick={CloseModal}
+              ></a>
               <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
             </header>
 
