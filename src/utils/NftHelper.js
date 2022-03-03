@@ -23,6 +23,7 @@ class NftHelper {
       imageUrl: `${this.config.fileUrlThumbnails}/${tokenId}${this.config.thumbFiletype}`,
       rarity,
       meta,
+      total: this.config.totalNumMints,
     };
   };
 

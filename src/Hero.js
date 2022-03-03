@@ -5,7 +5,7 @@ import { keplrState, mintedCountState } from "./state";
 import config from "./config";
 
 function ShowMint(props) {
-  const keplrValue = useRecoilValue(keplrState);
+  const keplrValue = useRecoilValue(keplrState("state"));
   if (keplrValue == "not_exists") {
     return <h3>Please install Keplr extension</h3>;
   } else {

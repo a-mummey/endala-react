@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Hero from "./Hero";
+import MintBody from "./MintBody";
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { keplrState, mintedCountState } from "./state";
@@ -8,7 +9,7 @@ import asyncNftHelper from "./utils/AsyncNftHelper";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 
 function App() {
-  const setKeplrState = useSetRecoilState(keplrState);
+  const setKeplrState = useSetRecoilState(keplrState("state"));
   const setMintedCountState = useSetRecoilState(mintedCountState);
   useEffect(async () => {
     asyncKeplrClient
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <Hero></Hero>
+      <MintBody></MintBody>
     </div>
   );
 }

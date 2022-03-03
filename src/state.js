@@ -1,53 +1,12 @@
-import { atom, useSetRecoilState } from "recoil";
-
+import { atom, atomFamily, selector } from "recoil";
 import asyncNftHelper from "./utils/AsyncNftHelper";
 
-const keplrState = atom({
+const keplrState = atomFamily({
   key: "keplrState",
-  default: "loading",
-  effects: [
-    ({ onSet, setSelf }) => {
-      onSet(async (state, oldState) => {
-        switch (`${oldState}-${state}`) {
-          case "loaded-minting":
-            // Mint
-            const nftHelper = await asyncNftHelper();
-            nftHelper
-              .mintSender()
-              .then((tokenId) => {
-                // setTokenId(tokenId);
-                setSelf("loaded");
-              })
-              .catch((e) => {
-                if (e.message === "Request rejected") {
-                  console.debug("Request rejected, reloading");
-                  setSelf("loaded");
-                } else {
-                  console.error(e);
-                  setSelf("error");
-                }
-              });
-            console.log(nftHelper);
-            break;
-          default:
-            //Do nothign
-            break;
-        }
-      });
-    },
-  ],
-});
-
-const latestMintedToken = atom({
-  key: "latestMintedToken",
-  default: null,
-  effects: [
-    ({ onSet }) => {
-      onSet(async (state, oldState) => {
-        console.log(state, oldState);
-      });
-    },
-  ],
+  default: {
+    state: "loading",
+    tokenId: null,
+  },
 });
 
 const mintedCountState = atom({
@@ -55,4 +14,20 @@ const mintedCountState = atom({
   default: "?",
 });
 
-export { keplrState, mintedCountState };
+const mintedTokenInfo = selector({
+  key: "mintedTokenInfo",
+  get: async ({ get }) => {
+    const helper = await asyncNftHelper();
+    const latestTokenId = get(keplrState("tokenId"));
+    // console.log("latestTokenId", latestTokenId);
+
+    if (typeof latestTokenId === "string") {
+      const nftData = await helper.getNftData(latestTokenId);
+      return nftData;
+    } else {
+      return null;
+    }
+  },
+});
+
+export { keplrState, mintedCountState, mintedTokenInfo };
