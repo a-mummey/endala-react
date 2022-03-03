@@ -1,3 +1,6 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 function Nav() {
   return (
     <nav className="container-fluid">
@@ -8,16 +11,16 @@ function Nav() {
       </ul>
       <ul>
         <li>
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="#">My Endalas</a>
+          <Link to="/my-endalas">My Endalas</Link>
         </li>
         <li>
-          <a href="#">Mint Gallery</a>
+          <Link to="/gallery">Gallery</Link>
         </li>
         <li>
-          <a href="#">About</a>
+          <Link to="/about">About</Link>
         </li>
       </ul>
     </nav>

@@ -1,10 +1,8 @@
 import { useRecoilValue } from "recoil";
-import config from "./config";
 import "./Hero.css";
 import MintButton from "./MintButton";
 import ProgressBar from "./ProgressBar";
 import { keplrState } from "./state";
-import TestInstructions from "./TestInstructions";
 
 function ShowMint(props) {
   const keplrValue = useRecoilValue(keplrState("state"));
@@ -16,12 +14,6 @@ function ShowMint(props) {
 }
 
 function Hero() {
-  const testMessage = config.testnet ? (
-    <TestInstructions></TestInstructions>
-  ) : (
-    ""
-  );
-
   return (
     <div className="hero" data-theme="dark">
       <header className="container">
@@ -35,7 +27,6 @@ function Hero() {
           </p>
         </div>
         <ProgressBar></ProgressBar>
-        <article>{testMessage}</article>
       </header>
     </div>
   );

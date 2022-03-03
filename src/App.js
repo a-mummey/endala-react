@@ -1,13 +1,15 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Hero from "./Hero";
-import MintBody from "./MintBody";
-import Nav from "./Nav";
 import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import "./App.css";
+import Nav from "./Nav";
+import About from "./pages/About";
+import Gallery from "./pages/Gallery";
+import Home from "./pages/Home";
+import MyEndalas from "./pages/MyEndalas";
 import { keplrState, mintedCountState } from "./state";
-import asyncNftHelper from "./utils/AsyncNftHelper";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
+import asyncNftHelper from "./utils/AsyncNftHelper";
 
 function App() {
   const setKeplrState = useSetRecoilState(keplrState("state"));
@@ -33,9 +35,15 @@ function App() {
 
   return (
     <div className="App">
-      <Nav></Nav>
-      <Hero></Hero>
-      <MintBody></MintBody>
+      <BrowserRouter>
+        <Nav></Nav>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/gallery" element={<Gallery />}></Route>
+          <Route path="/my-endalas" element={<MyEndalas />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
