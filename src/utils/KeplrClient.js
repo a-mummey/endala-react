@@ -5,37 +5,38 @@ const client = async (config) => {
   const prefix = "wasm";
   const gasPrice = null;
 
+  // hack foo to wait for keplr to be available
+  await new Promise((r) => setTimeout(r, 200));
+
   // check browser compatibility
-  if (!window.keplr) {
-    throw new Error("Keplr is not supported or installed on this browser!");
-  }
 
-  // try to enable keplr with given chainId
-  await window.keplr.enable(config.chainId).catch(() => {
+  const checkChainOrTestnet = async () => {
     if (config.testnet) {
-      // await addTestnetToKeplr().catch(() => {
-      //   throw new Error(
-      //     `Keplr can't connect to this chainId: ${config.chainId}`
-      //   );
-      // });
+      const testnet = await addTestnetToKeplr();
     } else {
-      throw new Error(`Keplr can't connect to this chainId: ${config.chainId}`);
+      const chain = await window.keplr.enable(config.chainId);
     }
-  });
+  };
 
-  // Setup signer
-  const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
+  await checkChainOrTestnet();
 
-  // Init SigningCosmWasmClient client
-  const signingClient = await SigningCosmWasmClient.connectWithSigner(
-    config.rpcEndpoint,
-    offlineSigner,
-    {
-      prefix,
-      gasPrice,
-    }
-  );
-  return signingClient;
+  if (window.getOfflineSignerAuto) {
+    // Setup signer
+    const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
+
+    // Init SigningCosmWasmClient client
+    const signingClient = await SigningCosmWasmClient.connectWithSigner(
+      config.rpcEndpoint,
+      offlineSigner,
+      {
+        prefix,
+        gasPrice,
+      }
+    );
+    return signingClient;
+  } else {
+    throw Error("Keplr not available");
+  }
 };
 
 export default client;

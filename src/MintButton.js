@@ -1,12 +1,42 @@
-import { keplrState, keplrMessageState } from "./state";
-import { useRecoilValue } from "recoil";
+import "./MintButton.css";
+import { keplrState } from "./state";
+import { useRecoilStat, useSetRecoilState, useRecoilValue } from "recoil";
+
+const mintStates = {
+  loaded: {
+    label: "Mint",
+    disabled: false,
+  },
+  loading: {
+    label: "Loading...",
+    disabled: true,
+  },
+  minting: {
+    label: "Minting...",
+    disabled: true,
+  },
+  error: {
+    label: "Error",
+    disabled: true,
+  },
+};
 
 function MintButton() {
-  const keplrMessage = useRecoilValue(keplrMessageState);
+  const kState = useRecoilValue(keplrState);
+  const setKeplrState = useSetRecoilState(keplrState);
+  // const [kState, setKeplrState] = useRecoilState(keplrState);
+  const buttonState = mintStates[kState] || mintStates.loading;
+  const mint = () => setKeplrState("minting");
+
   return (
-    <a id="mintButton" href="#" role="button" className="secondary">
-      {keplrMessage}
-    </a>
+    <button
+      className="mintButton"
+      role="button"
+      disabled={buttonState.disabled}
+      onClick={mint}
+    >
+      {buttonState.label}
+    </button>
   );
 }
 

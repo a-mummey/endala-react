@@ -1,22 +1,58 @@
-import { atom, selector } from "recoil";
+import { atom, useSetRecoilState } from "recoil";
+
+import asyncNftHelper from "./utils/AsyncNftHelper";
 
 const keplrState = atom({
   key: "keplrState",
   default: "loading",
+  effects: [
+    ({ onSet, setSelf }) => {
+      onSet(async (state, oldState) => {
+        switch (`${oldState}-${state}`) {
+          case "loaded-minting":
+            // Mint
+            const nftHelper = await asyncNftHelper();
+            nftHelper
+              .mintSender()
+              .then((tokenId) => {
+                // setTokenId(tokenId);
+                setSelf("loaded");
+              })
+              .catch((e) => {
+                if (e.message === "Request rejected") {
+                  console.debug("Request rejected, reloading");
+                  setSelf("loaded");
+                } else {
+                  console.error(e);
+                  setSelf("error");
+                }
+              });
+            console.log(nftHelper);
+            break;
+          default:
+            //Do nothign
+            break;
+        }
+      });
+    },
+  ],
 });
 
-const keplrMessageState = selector({
-  key: "keplrMessage",
-  get: ({ get }) => {
-    const kstate = get(keplrState);
-
-    switch (kstate) {
-      case "loading":
-        return "Loading";
-      default:
-        return "Loading";
-    }
-  },
+const latestMintedToken = atom({
+  key: "latestMintedToken",
+  default: null,
+  effects: [
+    ({ onSet }) => {
+      onSet(async (state, oldState) => {
+        console.log(state, oldState);
+      });
+    },
+  ],
 });
 
-export { keplrMessageState, keplrState };
+const mintedCountState = atom({
+  key: "mintedCountState",
+  default: "?",
+});
+
+export { keplrState, mintedCountState };

@@ -1,7 +1,8 @@
 import "./Hero.css";
 import MintButton from "./MintButton";
-import { useRecoilValue } from "recoil";
-import { keplrState } from "./state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { keplrState, mintedCountState } from "./state";
+import config from "./config";
 
 function ShowMint(props) {
   const keplrValue = useRecoilValue(keplrState);
@@ -13,6 +14,25 @@ function ShowMint(props) {
 }
 
 function Hero() {
+  const mintedCount = useRecoilValue(mintedCountState);
+  const mintedCountVal = mintedCount == "?" ? 0 : mintedCount;
+  const totalMints = config.totalNumMints;
+  const testMessage = config.testnet ? (
+    <p>
+      For testnet, please accept the Keplr request to add the testnet. Then
+      ensure you fund your testnet wallet from the&nbsp;
+      <a
+        href="https://discord.com/channels/755548171941445642/940653213022031912"
+        target="_blank"
+      >
+        faucet
+      </a>
+      .
+    </p>
+  ) : (
+    ""
+  );
+
   return (
     <div className="hero" data-theme="dark">
       <header className="container">
@@ -27,23 +47,15 @@ function Hero() {
         </div>
         <div id="mint-progress-wrap" className="container">
           <div className="progress-header">
-            Endalas Minted:
-            <span id="mint-progress-count"></span>/
-            <span id="mint-progress-total"></span>
-            <progress id="mint-progress-bar" value="" max=""></progress>
+            Endalas Minted: {mintedCount} / {totalMints}
+            <progress
+              id="mint-progress-bar"
+              value={mintedCountVal}
+              max={totalMints}
+            ></progress>
           </div>
         </div>
-        <p>
-          For testnet, please accept the Keplr request to add the testnet. Then
-          ensure you fund your testnet wallet from the
-          <a
-            href="https://discord.com/channels/755548171941445642/940653213022031912"
-            target="_blank"
-          >
-            faucet
-          </a>
-          .
-        </p>
+        {testMessage}
       </header>
     </div>
   );
