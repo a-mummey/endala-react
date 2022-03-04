@@ -5,7 +5,9 @@ function TestInstructions() {
       <ol>
         <li>Accept the Keplr Request to add the testnet</li>
         <li>Open Keplr and select the testnet</li>
-        <li>In Keplr, copy the testnet stars address </li>
+        <li>
+          In Keplr, copy the testnet <b>STARS</b> address{" "}
+        </li>
         <li>
           Go to the&nbsp;
           <a
@@ -20,7 +22,9 @@ function TestInstructions() {
           </b>
           &nbsp;where <kbd>addr</kbd> is the copied address
         </li>
-        <li>Wait for the faucet to send you some test STARS</li>
+        <li>
+          Wait for the faucet to send you some test <b>STARS</b>
+        </li>
         <li>Happy Minting</li>
       </ol>
     </div>
