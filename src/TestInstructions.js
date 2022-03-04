@@ -27,6 +27,10 @@ function TestInstructions() {
         </li>
         <li>Happy Minting</li>
       </ol>
+      <small>
+        Note: Attributes, numbering, and rarities will be changed for the
+        official mint.
+      </small>
     </div>
   );
 }
