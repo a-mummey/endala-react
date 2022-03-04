@@ -28,7 +28,7 @@ function Hero() {
         <div>
           <hgroup>
             <h1>Endala</h1>
-            <h2>A Stargaze NFT Project</h2>
+            <h2>A Generative NFT Project on Stargaze</h2>
           </hgroup>
           <p>
             <ShowMint></ShowMint>
