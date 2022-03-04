@@ -6,11 +6,9 @@ function MintBody() {
   let nftData;
   const setTokenId = useSetRecoilState(keplrState("tokenId"));
   const loadable = useRecoilValueLoadable(mintedTokenInfo);
-  // console.log(loadable);
   if (loadable.state == "hasValue") {
     nftData = loadable.contents;
   }
-  // console.log("nftData", nftData);
   const CloseModal = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -18,7 +16,6 @@ function MintBody() {
     setTokenId(null);
   };
 
-  //   const mintedNft = null;
   if (nftData && nftData.meta) {
     return (
       <main className="container">

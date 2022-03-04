@@ -1,12 +1,21 @@
 import { calculateFee, coins, GasPrice } from "@cosmjs/stargate";
+import log from "loglevel";
 
 class NftHelper {
   config;
   client;
   constructor(client, config) {
-    this.client = client;
+    this.offlineSigner = client.offlineSigner;
+    this.client = client.signingClient;
     this.config = config;
   }
+
+  getAllRarities = async () => {
+    const r = await window.fetch(
+      `${this.config.fileUrlRarities}/rarities${this.config.rarityType}`
+    );
+    return await r.json();
+  };
 
   getNftData = async (tokenId) => {
     const rarityP = await window.fetch(
@@ -27,17 +36,38 @@ class NftHelper {
     };
   };
 
+  getMyTokens = async (accountId) => {
+    const limit = 30;
+    const baseQuery = {
+      tokens: {
+        owner: accountId,
+        limit: limit,
+      },
+    };
+    let maxPages = 100;
+    let pageNum = 0;
+    let keepPaging = false;
+    let q = { ...baseQuery };
+    const myTokens = [];
+    do {
+      const { tokens } = await this.client.queryContractSmart(
+        this.config.sg721,
+        q
+      );
+      myTokens.push(...tokens);
+      if (tokens.length >= limit) {
+        keepPaging = true;
+        q = { tokens: { ...q.tokens, start_after: [...tokens].pop() } };
+      } else {
+        keepPaging = false;
+      }
+      pageNum++;
+    } while (keepPaging && pageNum < maxPages);
+    return new Set(myTokens);
+  };
+
   // https://github.com/public-awesome/stargaze-contracts/blob/main/contracts/sg721/schema/query_msg.json
   getProgress = async () => {
-    const tokenQuery1 = await this.client.queryContractSmart(
-      this.config.sg721,
-      {
-        tokens: {
-          owner: "stars1ayn0kctdmcjz0mxjgqm6lmhh8uash3q5l97y0y",
-        },
-      }
-    );
-    console.log(tokenQuery1);
     const tokenQuery = await this.client.queryContractSmart(this.config.sg721, {
       num_tokens: {},
     });
@@ -57,7 +87,7 @@ class NftHelper {
     const executeFee = calculateFee(300_000, gasPrice);
 
     const msg = { mint: {} };
-    console.log(msg);
+    log.debug(msg);
 
     const result = await this.client.execute(
       accounts[0].address,
@@ -68,10 +98,8 @@ class NftHelper {
       MINT_FEE
     );
     const wasmEvent = result.logs[0].events.find((e) => e.type === "wasm");
-    //   console.log(wasmEvent.attributes[5].key === "token_id");
     const tokenId = wasmEvent.attributes.find((a) => a.key === "token_id");
-    //   console.log(tokenId);
-    console.log(`Minted token id:${tokenId.value}`);
+    log.debug(`Minted token id:${tokenId.value}`);
     return tokenId.value;
   };
 }

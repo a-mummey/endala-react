@@ -3,6 +3,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import "./MintButton.css";
 import { keplrState, mintedCountState } from "./state";
 import asyncNftHelper from "./utils/AsyncNftHelper";
+import log from "loglevel";
 
 const mintStates = {
   loaded: {
@@ -44,10 +45,10 @@ function MintButton() {
       })
       .catch((e) => {
         if (e.message === "Request rejected") {
-          console.debug("Request rejected, reloading");
+          log.debug("Request rejected, reloading");
           setKeplrState("loaded");
         } else {
-          console.error(e);
+          log.error(e);
           setKeplrState("error");
         }
       });

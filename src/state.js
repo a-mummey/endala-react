@@ -9,9 +9,19 @@ const keplrState = atomFamily({
   },
 });
 
+const userAccountState = atom({
+  key: "userAccountState",
+  default: null,
+});
+
 const mintedCountState = atom({
   key: "mintedCountState",
   default: "?",
+});
+
+const raritiesState = atom({
+  key: "raritiesState",
+  default: [],
 });
 
 const mintedTokenInfo = selector({
@@ -19,7 +29,6 @@ const mintedTokenInfo = selector({
   get: async ({ get }) => {
     const helper = await asyncNftHelper();
     const latestTokenId = get(keplrState("tokenId"));
-    // console.log("latestTokenId", latestTokenId);
 
     if (typeof latestTokenId === "string") {
       const nftData = await helper.getNftData(latestTokenId);
@@ -30,4 +39,10 @@ const mintedTokenInfo = selector({
   },
 });
 
-export { keplrState, mintedCountState, mintedTokenInfo };
+export {
+  keplrState,
+  mintedCountState,
+  mintedTokenInfo,
+  raritiesState,
+  userAccountState,
+};

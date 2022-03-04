@@ -6,7 +6,7 @@ const client = async (config) => {
   const gasPrice = null;
 
   // hack foo to wait for keplr to be available
-  await new Promise((r) => setTimeout(r, 200));
+  await new Promise((r) => setTimeout(r, 1000));
 
   // check browser compatibility
 
@@ -33,7 +33,7 @@ const client = async (config) => {
         gasPrice,
       }
     );
-    return signingClient;
+    return { signingClient, offlineSigner };
   } else {
     throw Error("Keplr not available");
   }
