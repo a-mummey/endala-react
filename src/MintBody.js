@@ -1,13 +1,16 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { mintedTokenInfo, keplrState } from "./state";
+import { mintedTokenInfo, lastMintedTokenIdState } from "./state";
 import "./MintBody.css";
+import log from "loglevel";
 
 function MintBody() {
   let nftData;
-  const setTokenId = useSetRecoilState(keplrState("tokenId"));
-  const loadable = useRecoilValueLoadable(mintedTokenInfo);
-  if (loadable.state == "hasValue") {
-    nftData = loadable.contents;
+  const setTokenId = useSetRecoilState(lastMintedTokenIdState);
+
+  const loadableNftData = useRecoilValueLoadable(mintedTokenInfo);
+  log.debug(loadableNftData);
+  if (loadableNftData.state == "hasValue") {
+    nftData = loadableNftData.contents;
   }
   const CloseModal = (e) => {
     e.stopPropagation();

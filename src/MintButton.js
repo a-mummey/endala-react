@@ -1,7 +1,7 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import "./MintButton.css";
-import { keplrState, mintedCountState } from "./state";
+import { keplrState, mintedCountState, lastMintedTokenIdState } from "./state";
 import asyncNftHelper from "./utils/AsyncNftHelper";
 import log from "loglevel";
 
@@ -25,12 +25,12 @@ const mintStates = {
 };
 
 function MintButton() {
-  const kState = useRecoilValue(keplrState("state"));
-  const setKeplrState = useSetRecoilState(keplrState("state"));
-  const setTokenId = useSetRecoilState(keplrState("tokenId"));
-  const setMintedCountState = useSetRecoilState(mintedCountState);
-  // const [kState, setKeplrState] = useRecoilState(keplrState);
+  const resetMintedCount = useResetRecoilState(mintedCountState);
+  const kState = useRecoilValue(keplrState);
+  const setKeplrState = useSetRecoilState(keplrState);
+  const setLastMintedTokenId = useSetRecoilState(lastMintedTokenIdState);
   const buttonState = mintStates[kState] || mintStates.loading;
+
   const Mint = async () => {
     setKeplrState("minting");
     const nftHelper = await asyncNftHelper();
@@ -38,10 +38,8 @@ function MintButton() {
       .mintSender()
       .then((tokenId) => {
         setKeplrState("loaded");
-        setTokenId(tokenId);
-        nftHelper.getProgress().then((progress) => {
-          setMintedCountState(progress.minted);
-        });
+        setLastMintedTokenId(tokenId);
+        resetMintedCount();
       })
       .catch((e) => {
         if (e.message === "Request rejected") {
@@ -53,7 +51,6 @@ function MintButton() {
         }
       });
   };
-
   return (
     <button
       className="mintButton"

@@ -6,7 +6,8 @@ import ProgressBar from "./ProgressBar";
 import { keplrState } from "./state";
 
 function ShowMint(props) {
-  const keplrValue = useRecoilValue(keplrState("state"));
+  // const keplrValue = useRecoilValue(keplrState("state"));
+  const keplrValue = false;
   if (keplrValue == "not_exists") {
     return <h3>Please install Keplr extension</h3>;
   } else {
