@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "../config";
 import "./Hero.css";
 import MintButton from "./MintButton";
 import ProgressBar from "./ProgressBar";

@@ -1,6 +1,6 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import "./MintModal.css";
-import { lastMintedTokenIdState, mintedTokenInfo } from "./state";
+import { lastMintedTokenIdState, mintedTokenInfo } from "../state";
 import { Link } from "react-router-dom";
 
 function MintModal() {

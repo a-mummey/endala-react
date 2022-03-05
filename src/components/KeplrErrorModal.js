@@ -1,5 +1,5 @@
 import { useRecoilValueLoadable, useResetRecoilState } from "recoil";
-import { keplrDerviedState } from "./state";
+import { keplrDerviedState } from "../state";
 
 function KeplrErrorModal() {
   const kState = useRecoilValueLoadable(keplrDerviedState);

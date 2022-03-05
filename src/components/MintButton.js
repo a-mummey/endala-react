@@ -10,8 +10,8 @@ import {
   keplrDerviedState,
   lastMintedTokenIdState,
   mintedCountState,
-} from "./state";
-import asyncNftHelper from "./utils/AsyncNftHelper";
+} from "../state";
+import asyncNftHelper from "../utils/AsyncNftHelper";
 
 const mintStates = {
   loaded: {

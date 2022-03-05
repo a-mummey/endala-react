@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "../config";
 import TestInstructions from "./TestInstructions";
 
 function TestMessage() {

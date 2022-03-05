@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
-import config from "./config";
-import { mintedCountState } from "./state";
+import config from "../config";
+import { mintedCountState } from "../state";
 
 function ProgressBar() {
   const mintedCount = useRecoilValue(mintedCountState);

@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./Nav";
-import About from "./pages/About";
-import Gallery from "./pages/Gallery";
-import Home from "./pages/Home";
-import MyEndalas from "./pages/MyEndalas";
+import About from "../pages/About";
+import Gallery from "../pages/Gallery";
+import Home from "../pages/Home";
+import MyEndalas from "../pages/MyEndalas";
 
 function App() {
   return (

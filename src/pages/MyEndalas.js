@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
-import NftDetails from "../NftDetails";
+import NftDetails from "../components/NftDetails";
 import { myTokensSelector, nftDetailsSelector } from "../state";
 import "./MyEndalas.css";
 

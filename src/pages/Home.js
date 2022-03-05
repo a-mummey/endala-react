@@ -1,7 +1,7 @@
-import Hero from "../Hero";
-import MintModal from "../MintModal";
-import TestMessage from "../TestMessage";
-import KeplrErrorModal from "../KeplrErrorModal";
+import Hero from "../components/Hero";
+import MintModal from "../components/MintModal";
+import TestMessage from "../components/TestMessage";
+import KeplrErrorModal from "../components/KeplrErrorModal";
 
 function Home() {
   return (
