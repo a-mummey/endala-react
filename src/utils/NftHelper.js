@@ -29,6 +29,7 @@ class NftHelper {
     const meta = await metaP.json();
 
     return {
+      tokenId,
       imageUrl: `${this.config.fileUrlThumbnails}/${tokenId}${this.config.thumbFiletype}`,
       rarity,
       meta,

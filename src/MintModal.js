@@ -1,8 +1,9 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import "./MintBody.css";
+import "./MintModal.css";
 import { lastMintedTokenIdState, mintedTokenInfo } from "./state";
+import { Link } from "react-router-dom";
 
-function MintBody() {
+function MintModal() {
   let nftData;
   const setTokenId = useSetRecoilState(lastMintedTokenIdState);
 
@@ -32,10 +33,18 @@ function MintBody() {
               >
                 <i aria-hidden="true"></i>
               </a>
-              <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
+              <hgroup>
+                <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
+                <h4>
+                  <Link to={`/my-endalas/${nftData.tokenId}`}>
+                    View In Gallery
+                  </Link>
+                </h4>
+              </hgroup>
             </header>
-
-            <img src={nftData.imageUrl} alt={nftData.meta.name} />
+            <Link to={`/my-endalas/${nftData.tokenId}`}>
+              <img src={nftData.imageUrl} alt={nftData.meta.name} />
+            </Link>
           </article>
         </dialog>
       </main>
@@ -44,4 +53,4 @@ function MintBody() {
     return <div></div>;
   }
 }
-export default MintBody;
+export default MintModal;

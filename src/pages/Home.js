@@ -1,5 +1,5 @@
 import Hero from "../Hero";
-import MintBody from "../MintBody";
+import MintModal from "../MintModal";
 import TestMessage from "../TestMessage";
 import KeplrErrorModal from "../KeplrErrorModal";
 
@@ -8,7 +8,7 @@ function Home() {
     <>
       <Hero></Hero>
       <TestMessage></TestMessage>
-      <MintBody></MintBody>
+      <MintModal></MintModal>
       <KeplrErrorModal></KeplrErrorModal>
     </>
   );
