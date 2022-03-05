@@ -1,21 +1,90 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, DefaultValue, selector, selectorFamily } from "recoil";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 import asyncNftHelper from "./utils/AsyncNftHelper";
 
-// State of the Keplr Wallet
-const keplrState = atom({
-  key: "keplrState",
-  default: "loading",
+// This keeps the current client and its status
+const keplrClientState = atom({
+  key: "keplrClientState",
+  default: { client: null, state: "loading" },
   effects: [
-    async ({ setSelf }) => {
-      try {
-        const client = await asyncKeplrClient;
-        setSelf("loaded");
-      } catch (e) {
-        setSelf("error");
-      }
+    async ({ setSelf, onSet }) => {
+      const initialize = async () => {
+        try {
+          await asyncKeplrClient.loadClient();
+          setSelf({ client: asyncKeplrClient.client, state: "loaded" });
+        } catch (e) {
+          setSelf({ client: null, state: "error" });
+        }
+      };
+      await initialize();
+      onSet(async (n, o, isReset) => {
+        if (isReset) {
+          await initialize();
+        }
+      });
     },
   ],
+});
+
+// This is basically a helper to get/set the grouped state by key
+const keplrClientSelectorFamily = selectorFamily({
+  key: "keplrClientSelectorFamily",
+  get:
+    (key) =>
+    ({ get }) => {
+      return get(keplrClientState)[key];
+    },
+  set:
+    (key) =>
+    ({ set, get }, newValue) => {
+      set(keplrClientState, (prevState) => ({ ...prevState, [key]: newValue }));
+    },
+});
+
+// Simple minting flag
+const mintingState = atom({
+  key: "mintingState",
+  default: false,
+});
+
+// Derived State of the Keplr Wallet
+const keplrDerviedState = selector({
+  key: "keplrState",
+  get: async ({ get }) => {
+    const clientState = await get(keplrClientSelectorFamily("state"));
+    const minting = get(mintingState);
+    if (clientState === "loading") {
+      return "loading";
+    } else if (minting) {
+      return "minting";
+    } else {
+      return clientState;
+    }
+  },
+
+  set: ({ set, get, reset }, newValue) => {
+    if (newValue instanceof DefaultValue) {
+      // Reset
+      set(mintingState, false);
+      reset(keplrClientState);
+    } else {
+      switch (newValue) {
+        case "error":
+          set(mintingState, false);
+          set(keplrClientSelectorFamily("state"), "error");
+          break;
+        case "minting":
+          set(mintingState, true);
+          break;
+        case "loaded":
+          set(mintingState, false);
+          set(keplrClientSelectorFamily("state"), "loaded");
+          break;
+        default:
+        // Unsure
+      }
+    }
+  },
 });
 
 // Total number of mints
@@ -95,9 +164,9 @@ const mintedTokenInfo = selector({
 const currentAccountSelector = selector({
   key: "currentAccountSelector",
   get: async ({ get }) => {
-    const kState = get(keplrState);
-    if (kState == "loaded") {
-      const client = await asyncKeplrClient;
+    const kState = get(keplrDerviedState);
+    if (kState === "loaded") {
+      const { client } = await asyncKeplrClient;
       const accounts = await client.offlineSigner.getAccounts();
       if (Array.isArray(accounts) && accounts[0]) {
         return accounts[0].address;
@@ -124,7 +193,7 @@ const myTokensSelector = selector({
 });
 
 export {
-  keplrState,
+  keplrDerviedState,
   mintedCountState,
   mintedTokenInfo,
   raritiesState,

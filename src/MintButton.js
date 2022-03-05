@@ -1,61 +1,82 @@
-import React from "react";
-import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
-import "./MintButton.css";
-import { keplrState, mintedCountState, lastMintedTokenIdState } from "./state";
-import asyncNftHelper from "./utils/AsyncNftHelper";
 import log from "loglevel";
+import React from "react";
+import {
+  useRecoilValueLoadable,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
+import "./MintButton.css";
+import {
+  keplrDerviedState,
+  lastMintedTokenIdState,
+  mintedCountState,
+} from "./state";
+import asyncNftHelper from "./utils/AsyncNftHelper";
 
 const mintStates = {
   loaded: {
     label: "Mint",
     disabled: false,
+    loading: false,
   },
   loading: {
     label: "Loading...",
     disabled: true,
+    loading: true,
   },
   minting: {
     label: "Minting...",
     disabled: true,
+    loading: true,
   },
   error: {
     label: "Error",
     disabled: true,
+    loading: false,
   },
 };
 
 function MintButton() {
   const resetMintedCount = useResetRecoilState(mintedCountState);
-  const kState = useRecoilValue(keplrState);
-  const setKeplrState = useSetRecoilState(keplrState);
+  const kState = useRecoilValueLoadable(keplrDerviedState);
+  const setKeplrState = useSetRecoilState(keplrDerviedState);
   const setLastMintedTokenId = useSetRecoilState(lastMintedTokenIdState);
-  const buttonState = mintStates[kState] || mintStates.loading;
+
+  const buttonState =
+    kState.state === "hasValue"
+      ? mintStates[kState.contents]
+      : mintStates.loading;
 
   const Mint = async () => {
     setKeplrState("minting");
     const nftHelper = await asyncNftHelper();
-    nftHelper
-      .mintSender()
-      .then((tokenId) => {
-        setKeplrState("loaded");
-        setLastMintedTokenId(tokenId);
-        resetMintedCount();
-      })
-      .catch((e) => {
-        if (e.message === "Request rejected") {
-          log.debug("Request rejected, reloading");
+    try {
+      nftHelper
+        .mintSender()
+        .then((tokenId) => {
+          setLastMintedTokenId(tokenId);
+          resetMintedCount();
           setKeplrState("loaded");
-        } else {
-          log.error(e);
-          setKeplrState("error");
-        }
-      });
+        })
+        .catch((e) => {
+          if (e.message === "Request rejected") {
+            log.debug("Request rejected, reloading");
+            setKeplrState("loaded");
+          } else {
+            log.error(e);
+            setKeplrState("error");
+            setTimeout(5000, () => setKeplrState("loaded"));
+          }
+        });
+    } catch (e) {
+      setKeplrState("error");
+      setTimeout(5000, () => setKeplrState("loaded"));
+    }
   };
   return (
     <button
       className="mintButton"
-      aria-busy={buttonState.disabled}
-      role="button"
+      aria-busy={buttonState.loading}
       disabled={buttonState.disabled}
       onClick={Mint}
     >

@@ -1,5 +1,5 @@
 import config from "../config";
-import keplrClient from "./KeplrClient";
+import KeplrClient from "./KeplrClient";
 
-const asyncKeplrClient = keplrClient(config);
+const asyncKeplrClient = new KeplrClient(config);
 export default asyncKeplrClient;

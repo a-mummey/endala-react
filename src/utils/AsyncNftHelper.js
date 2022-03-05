@@ -3,7 +3,7 @@ import asyncKeplrClient from "./AsyncKeplrClient";
 import NftHelper from "./NftHelper";
 
 const asyncNftHelper = async () => {
-  const client = await asyncKeplrClient;
-  return new NftHelper(client, config);
+  await asyncKeplrClient.loadClient();
+  return new NftHelper(asyncKeplrClient.client, config);
 };
 export default asyncNftHelper;

@@ -1,42 +1,53 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { addTestnetToKeplr } from "./KeplrTestnet";
 
-const client = async (config) => {
-  const prefix = "wasm";
-  const gasPrice = null;
+class KeplrClient {
+  config;
+  client;
 
-  // hack foo to wait for keplr to be available
-  await new Promise((r) => setTimeout(r, 1000));
+  constructor(config) {
+    this.config = config;
+  }
 
-  // check browser compatibility
+  loadClient = async () => {
+    this.client = null;
+    const prefix = "wasm";
+    const gasPrice = null;
+    const config = this.config;
 
-  const checkChainOrTestnet = async () => {
-    if (config.testnet) {
-      const testnet = await addTestnetToKeplr();
+    // hack foo to wait for keplr to be available
+    await new Promise((r) => setTimeout(r, 1000));
+
+    // check browser compatibility
+
+    const checkChainOrTestnet = async () => {
+      if (config.testnet) {
+        const testnet = await addTestnetToKeplr();
+      } else {
+        const chain = await window.keplr.enable(config.chainId);
+      }
+    };
+
+    await checkChainOrTestnet();
+
+    if (window.getOfflineSignerAuto) {
+      // Setup signer
+      const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
+
+      // Init SigningCosmWasmClient client
+      const signingClient = await SigningCosmWasmClient.connectWithSigner(
+        config.rpcEndpoint,
+        offlineSigner,
+        {
+          prefix,
+          gasPrice,
+        }
+      );
+      this.client = { signingClient, offlineSigner };
     } else {
-      const chain = await window.keplr.enable(config.chainId);
+      throw Error("Keplr not available");
     }
   };
+}
 
-  await checkChainOrTestnet();
-
-  if (window.getOfflineSignerAuto) {
-    // Setup signer
-    const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
-
-    // Init SigningCosmWasmClient client
-    const signingClient = await SigningCosmWasmClient.connectWithSigner(
-      config.rpcEndpoint,
-      offlineSigner,
-      {
-        prefix,
-        gasPrice,
-      }
-    );
-    return { signingClient, offlineSigner };
-  } else {
-    throw Error("Keplr not available");
-  }
-};
-
-export default client;
+export default KeplrClient;

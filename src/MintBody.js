@@ -1,15 +1,14 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { mintedTokenInfo, lastMintedTokenIdState } from "./state";
 import "./MintBody.css";
-import log from "loglevel";
+import { lastMintedTokenIdState, mintedTokenInfo } from "./state";
 
 function MintBody() {
   let nftData;
   const setTokenId = useSetRecoilState(lastMintedTokenIdState);
 
   const loadableNftData = useRecoilValueLoadable(mintedTokenInfo);
-  log.debug(loadableNftData);
-  if (loadableNftData.state == "hasValue") {
+  // log.debug(loadableNftData);
+  if (loadableNftData.state === "hasValue") {
     nftData = loadableNftData.contents;
   }
   const CloseModal = (e) => {
@@ -30,11 +29,13 @@ function MintBody() {
                 aria-label="Close"
                 className="close"
                 onClick={CloseModal}
-              ></a>
+              >
+                <i aria-hidden="true"></i>
+              </a>
               <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
             </header>
 
-            <img src={nftData.imageUrl} />
+            <img src={nftData.imageUrl} alt={nftData.meta.name} />
           </article>
         </dialog>
       </main>

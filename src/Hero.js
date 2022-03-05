@@ -1,19 +1,7 @@
-import { useRecoilValue } from "recoil";
 import config from "./config";
 import "./Hero.css";
 import MintButton from "./MintButton";
 import ProgressBar from "./ProgressBar";
-import { keplrState } from "./state";
-
-function ShowMint(props) {
-  // const keplrValue = useRecoilValue(keplrState("state"));
-  const keplrValue = false;
-  if (keplrValue == "not_exists") {
-    return <h3>Please install Keplr extension</h3>;
-  } else {
-    return <MintButton></MintButton>;
-  }
-}
 
 function Hero() {
   const randInt = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
@@ -32,7 +20,7 @@ function Hero() {
             <h2>A Generative NFT Project on Stargaze</h2>
           </hgroup>
           <p>
-            <ShowMint></ShowMint>
+            <MintButton></MintButton>
           </p>
         </div>
         <ProgressBar></ProgressBar>
