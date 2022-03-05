@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 import asyncNftHelper from "./utils/AsyncNftHelper";
 
@@ -55,6 +55,18 @@ const raritiesState = atom({
       setSelf(rarities);
     },
   ],
+});
+
+// Get details of a single NFT
+const nftDetailsSelector = selectorFamily({
+  key: "singleRaritySelector",
+  get: (tokenId) => async () => {
+    if (tokenId) {
+      const helper = await asyncNftHelper();
+      const nftData = await helper.getNftData(tokenId);
+      return nftData;
+    }
+  },
 });
 
 // Last minted token id
@@ -119,4 +131,5 @@ export {
   currentAccountSelector,
   myTokensSelector,
   lastMintedTokenIdState,
+  nftDetailsSelector,
 };

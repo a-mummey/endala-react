@@ -16,7 +16,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/gallery" element={<Gallery />}></Route>
-          <Route path="/my-endalas" element={<MyEndalas />}></Route>
+          <Route path="/my-endalas" element={<MyEndalas />}>
+            <Route path=":tokenId" element={<MyEndalas />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
