@@ -14,6 +14,7 @@ module.exports = {
     rarityType: ".json", // UPDATE ME to Your total mints
     fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster (but this could also be an IPFS url)
+    fileUrlMiniThumbs: "https://files.endala.xyz/testnet/mini",
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
   },
@@ -32,6 +33,7 @@ module.exports = {
     rarityType: ".json", // UPDATE ME to Your total mints
     fileBase: "https://files.endala.xyz/",
     fileUrlThumbnails: "https://files.endala.xyz/main/thumbnails",
+    fileUrlMiniThumbs: "https://files.endala.xyz/testnet/mini",
     fileUrlMetadata: "https://files.endala.xyz/main/metadata",
     fileUrlRarities: "https://files.endala.xyz/main/rarities",
   },
