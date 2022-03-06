@@ -13,9 +13,9 @@ module.exports = {
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
     fileBase: "https://files.endala.xyz/",
-    fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster
-    fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
-    fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
+    fileUrlThumbnails: "https://files.endala.xyz/nft/thumbnails", // I am hosting cached versions on S3 because its much faster
+    fileUrlMetadata: "https://files.endala.xyz/nft/metadata",
+    fileUrlRarities: "https://files.endala.xyz/nft/rarities",
   },
   // Production Values
   production: {
