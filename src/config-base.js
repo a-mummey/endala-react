@@ -9,7 +9,7 @@ module.exports = {
     minter: "stars1kh5e4wajfkv822esuhtsn6veak02085neh2m6flfmujeht2nmztshzy257", // UPDATE ME to your testnet contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".jpg", // UPDATE ME to Your total mints
+    thumbFiletype: ".png", // UPDATE ME to Your total mints
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
     fileBase: "https://files.endala.xyz/",
@@ -28,7 +28,7 @@ module.exports = {
     minter: "stars1kh5e4wajfkv822esuhtsn6veak02085neh2m6flfmujeht2nmztshzy257", // UPDATE ME to your production contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".jpg", // UPDATE ME to Your total mints
+    thumbFiletype: ".png", // UPDATE ME to Your total mints
     metadataType: ".json", // UPDATE ME to Your total mints
     rarityType: ".json", // UPDATE ME to Your total mints
     fileBase: "https://files.endala.xyz/",
