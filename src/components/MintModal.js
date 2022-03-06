@@ -1,17 +1,14 @@
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import "./MintModal.css";
-import { lastMintedTokenIdState, mintedTokenInfo } from "../state";
+import { newTokenAddedSelector, mintedTokenInfo } from "../state";
 import { Link } from "react-router-dom";
 
 function MintModal() {
-  let nftData;
-  const setTokenId = useSetRecoilState(lastMintedTokenIdState);
+  const setTokenId = useSetRecoilState(newTokenAddedSelector);
 
   const loadableNftData = useRecoilValueLoadable(mintedTokenInfo);
-  // log.debug(loadableNftData);
-  if (loadableNftData.state === "hasValue") {
-    nftData = loadableNftData.contents;
-  }
+  const nftData = loadableNftData.valueMaybe();
+
   const CloseModal = (e) => {
     e.stopPropagation();
     e.preventDefault();

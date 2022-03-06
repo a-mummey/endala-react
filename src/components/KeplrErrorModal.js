@@ -3,8 +3,7 @@ import { keplrDerviedState } from "../state";
 
 function KeplrErrorModal() {
   const kState = useRecoilValueLoadable(keplrDerviedState);
-  const isKeplrError =
-    kState.state === "hasValue" && kState.contents === "error";
+  const isKeplrError = kState.valueMaybe() === "error";
   const resetKeplrState = useResetRecoilState(keplrDerviedState);
 
   const CloseModal = (e) => {

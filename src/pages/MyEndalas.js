@@ -1,7 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
 import NftDetails from "../components/NftDetails";
-import { myTokensSelector, nftDetailsSelector } from "../state";
+import {
+  currentAccountSelector,
+  nftDetailsSelector,
+  allMintedTokensState,
+  myMintedTokensState,
+} from "../state";
 import "./MyEndalas.css";
 
 function endalaList(tokenIds) {
@@ -13,9 +18,10 @@ function endalaList(tokenIds) {
 }
 function MyEndalas() {
   let params = useParams();
-  const myTokensState = useRecoilValueLoadable(myTokensSelector);
-  const myTokens =
-    myTokensState.state === "hasValue" ? myTokensState.contents : [];
+  const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
+  const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
+
+  const myTokens = myMintedTokens.valueMaybe() || [];
 
   let currentTokenId = null;
   if (params.tokenId && myTokens.includes(params.tokenId)) {
@@ -27,12 +33,10 @@ function MyEndalas() {
     nftDetailsSelector(currentTokenId)
   );
   if (currentTokenId) {
-    const nftDetails =
-      nftDetailsLoadable.state == "hasValue" ? (
-        <NftDetails nftDetails={nftDetailsLoadable.contents}></NftDetails>
-      ) : (
-        <></>
-      );
+    const nftDetails = nftDetailsLoadable
+      .map((d) => <NftDetails nftDetails={d}></NftDetails>)
+      .valueMaybe() || <></>;
+
     return (
       <div className="container-fluid">
         <div className="endalas-container">

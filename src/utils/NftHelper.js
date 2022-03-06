@@ -4,6 +4,7 @@ import log from "loglevel";
 class NftHelper {
   config;
   client;
+  limit = 30;
   constructor(client, config) {
     this.offlineSigner = client.offlineSigner;
     this.client = client.signingClient;
@@ -37,36 +38,6 @@ class NftHelper {
     };
   };
 
-  getMyTokens = async (accountId) => {
-    const limit = 30;
-    const baseQuery = {
-      tokens: {
-        owner: accountId,
-        limit: limit,
-      },
-    };
-    let maxPages = 100;
-    let pageNum = 0;
-    let keepPaging = false;
-    let q = { ...baseQuery };
-    const myTokens = [];
-    do {
-      const { tokens } = await this.client.queryContractSmart(
-        this.config.sg721,
-        q
-      );
-      myTokens.push(...tokens);
-      if (tokens.length >= limit) {
-        keepPaging = true;
-        q = { tokens: { ...q.tokens, start_after: [...tokens].pop() } };
-      } else {
-        keepPaging = false;
-      }
-      pageNum++;
-    } while (keepPaging && pageNum < maxPages);
-    return new Set(myTokens);
-  };
-
   // https://github.com/public-awesome/stargaze-contracts/blob/main/contracts/sg721/schema/query_msg.json
   getProgress = async () => {
     const tokenQuery = await this.client.queryContractSmart(this.config.sg721, {
@@ -76,6 +47,41 @@ class NftHelper {
       minted: tokenQuery.count,
       total: this.config.totalNumMints,
     };
+  };
+
+  getMyMintedTokens = async (accountId, startAfter) => {
+    const q = {
+      tokens: {
+        owner: accountId,
+        limit: this.limit,
+      },
+    };
+    if (startAfter) {
+      q.tokens.start_after = startAfter;
+    }
+    // console.log("getMyMintedTokens", q);
+    const { tokens } = await this.client.queryContractSmart(
+      this.config.sg721,
+      q
+    );
+    return tokens;
+  };
+
+  getAllMintedTokens = async (startAfter) => {
+    const q = {
+      all_tokens: {
+        limit: this.limit,
+      },
+    };
+    if (startAfter) {
+      q.all_tokens.start_after = startAfter;
+    }
+    // console.log("getAllMintedTokens", q);
+    const { tokens } = await this.client.queryContractSmart(
+      this.config.sg721,
+      q
+    );
+    return tokens;
   };
 
   mintSender = async () => {

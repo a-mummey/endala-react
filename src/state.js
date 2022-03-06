@@ -144,6 +144,24 @@ const lastMintedTokenIdState = atom({
   default: null,
 });
 
+const newTokenAddedSelector = selector({
+  key: "newTokenAddedSelector",
+  get: ({ get }) => {
+    return get(lastMintedTokenIdState);
+  },
+  set: ({ set, get }, tokenId) => {
+    set(lastMintedTokenIdState, tokenId);
+    if (tokenId) {
+      set(myMintedTokensState, (current) => [
+        ...new Set([...current, tokenId]),
+      ]);
+      set(allMintedTokensState, (current) => [
+        ...new Set([...current, tokenId]),
+      ]);
+    }
+  },
+});
+
 // The last minted token information
 const mintedTokenInfo = selector({
   key: "mintedTokenInfo",
@@ -177,19 +195,14 @@ const currentAccountSelector = selector({
   },
 });
 
-// A list of tokens I've minted
-const myTokensSelector = selector({
-  key: "myTokensSelector",
-  get: async ({ get }) => {
-    const currentAccount = get(currentAccountSelector);
-    if (currentAccount) {
-      const helper = await asyncNftHelper();
-      const tokenSet = await helper.getMyTokens(currentAccount);
-      return [...tokenSet];
-    } else {
-      return [];
-    }
-  },
+const myMintedTokensState = atom({
+  key: "myMintedTokensState",
+  default: [],
+});
+
+const allMintedTokensState = atom({
+  key: "allMintedTokensState",
+  default: [],
 });
 
 export {
@@ -198,7 +211,8 @@ export {
   mintedTokenInfo,
   raritiesState,
   currentAccountSelector,
-  myTokensSelector,
-  lastMintedTokenIdState,
+  newTokenAddedSelector,
   nftDetailsSelector,
+  allMintedTokensState,
+  myMintedTokensState,
 };

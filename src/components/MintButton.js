@@ -8,7 +8,7 @@ import {
 import "./MintButton.css";
 import {
   keplrDerviedState,
-  lastMintedTokenIdState,
+  newTokenAddedSelector,
   mintedCountState,
 } from "../state";
 import asyncNftHelper from "../utils/AsyncNftHelper";
@@ -40,12 +40,10 @@ function MintButton() {
   const resetMintedCount = useResetRecoilState(mintedCountState);
   const kState = useRecoilValueLoadable(keplrDerviedState);
   const setKeplrState = useSetRecoilState(keplrDerviedState);
-  const setLastMintedTokenId = useSetRecoilState(lastMintedTokenIdState);
+  const setNewToken = useSetRecoilState(newTokenAddedSelector);
 
   const buttonState =
-    kState.state === "hasValue"
-      ? mintStates[kState.contents]
-      : mintStates.loading;
+    kState.map((s) => mintStates[s]).valueMaybe() || mintStates.loading;
 
   const Mint = async () => {
     setKeplrState("minting");
@@ -54,7 +52,7 @@ function MintButton() {
       nftHelper
         .mintSender()
         .then((tokenId) => {
-          setLastMintedTokenId(tokenId);
+          setNewToken(tokenId);
           resetMintedCount();
           setKeplrState("loaded");
         })

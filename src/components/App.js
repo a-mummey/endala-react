@@ -6,10 +6,12 @@ import About from "../pages/About";
 import Gallery from "../pages/Gallery";
 import Home from "../pages/Home";
 import MyEndalas from "../pages/MyEndalas";
+import StateSubscriber from "./StateSubscriber";
 
 function App() {
   return (
     <div className="App">
+      <StateSubscriber></StateSubscriber>
       <BrowserRouter>
         <Nav></Nav>
         <Routes>
