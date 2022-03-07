@@ -6,7 +6,7 @@ import ProgressBar from "./ProgressBar";
 function Hero() {
   const randInt =
     Math.floor(Math.random() * (config.numHeroImages - 1 + 1)) + 1;
-  const heroStyle = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url("${config.fileBase}hero/hero${randInt}.jpg"`;
+  const heroStyle = `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)), url("${config.fileBase}hero/hero${randInt}.jpg"`;
 
   return (
     <div
