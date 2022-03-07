@@ -213,7 +213,7 @@ const myMintedTokensState = atom({
 
 const allMintedTokensState = atom({
   key: "allMintedTokensState",
-  default: [],
+  default: null,
 });
 
 export {

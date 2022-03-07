@@ -14,9 +14,10 @@ function StateSubscriber() {
 
   const setAllTokens = useRecoilCallback(({ set }) => (tokenIds) => {
     if (tokenIds.length) {
-      set(allMintedTokensState, (current) => [
-        ...new Set([...current, ...tokenIds]),
-      ]);
+      set(allMintedTokensState, (current) => {
+        const minted = current || [];
+        return [...new Set([...minted, ...tokenIds])];
+      });
     }
   });
   const setMyTokens = useRecoilCallback(({ set }) => (tokenIds) => {
