@@ -1,19 +1,29 @@
-import { useRecoilValueLoadable, useResetRecoilState } from "recoil";
-import { keplrDerviedState } from "../state";
+import {
+  useRecoilValueLoadable,
+  useResetRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
+import { keplrDerviedState, keplrErrorMsgViewed } from "../state";
 
 function KeplrErrorModal() {
   const kState = useRecoilValueLoadable(keplrDerviedState);
   const isKeplrError = kState.valueMaybe() === "error";
   const resetKeplrState = useResetRecoilState(keplrDerviedState);
+  const viewedKeplrMessage = useRecoilValue(keplrErrorMsgViewed);
+  const setViewedKeplrMessage = useSetRecoilState(keplrErrorMsgViewed);
 
   const CloseModal = (e) => {
     e.stopPropagation();
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
     resetKeplrState();
+    setViewedKeplrMessage(true);
   };
 
-  if (isKeplrError) {
+  console.log(viewedKeplrMessage);
+
+  if (isKeplrError && !viewedKeplrMessage) {
     return (
       <dialog className="keplrError" open>
         <article>

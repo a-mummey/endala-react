@@ -20,8 +20,13 @@ function MyEndalas() {
   let currentTokenId;
   if (params.tokenId) {
     currentTokenId = params.tokenId;
-  } else if (Array.isArray(allMintedTokens.valueMaybe())) {
+  } else if (
+    Array.isArray(allMintedTokens.valueMaybe()) &&
+    allMintedTokens.valueMaybe()[0]
+  ) {
     currentTokenId = allMintedTokens.valueMaybe()[0];
+  } else {
+    currentTokenId = 1;
   }
 
   return (

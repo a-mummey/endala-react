@@ -1,4 +1,10 @@
-import { atom, DefaultValue, selector, selectorFamily } from "recoil";
+import {
+  atom,
+  atomFamily,
+  DefaultValue,
+  selector,
+  selectorFamily,
+} from "recoil";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 import asyncNftHelper from "./utils/AsyncNftHelper";
 import log from "loglevel";
@@ -40,6 +46,11 @@ const keplrClientSelectorFamily = selectorFamily({
     ({ set, get }, newValue) => {
       set(keplrClientState, (prevState) => ({ ...prevState, [key]: newValue }));
     },
+});
+
+const keplrErrorMsgViewed = atom({
+  key: "keplrErrorMsgViewed",
+  default: false,
 });
 
 // Simple minting flag
@@ -221,4 +232,5 @@ export {
   nftDetailsSelector,
   allMintedTokensState,
   myMintedTokensState,
+  keplrErrorMsgViewed,
 };
