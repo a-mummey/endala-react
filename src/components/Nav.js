@@ -14,10 +14,7 @@ function Nav() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/my-endalas">My Endalas</Link>
-        </li>
-        <li>
-          <Link to="/gallery">Gallery</Link>
+          <Link to="/nft">Gallery</Link>
         </li>
         <li>
           <Link to="/about">About</Link>

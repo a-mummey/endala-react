@@ -35,16 +35,13 @@ function MintModal() {
               <hgroup>
                 <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
                 <h4>
-                  <Link
-                    to={`/my-endalas/${nftData.tokenId}`}
-                    onClick={CloseModal}
-                  >
+                  <Link to={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
                     View In Gallery
                   </Link>
                 </h4>
               </hgroup>
             </header>
-            <Link to={`/my-endalas/${nftData.tokenId}`} onClick={CloseModal}>
+            <Link to={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
               <img src={nftData.imageUrl} alt={nftData.meta.name} />
             </Link>
           </article>
