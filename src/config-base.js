@@ -5,8 +5,8 @@ module.exports = {
     restEndpoint: "https://rest.big-bang-1.stargaze-apis.com/",
     chainId: "big-bang-1",
     // Custom values here
-    sg721: "stars19w7nrfanq6jj7ejp9jglae5c2734ud3zmmkazwcekqxzucwjd32sep8yp9", // UPDATE ME to your testnet contract
-    minter: "stars1kh5e4wajfkv822esuhtsn6veak02085neh2m6flfmujeht2nmztshzy257", // UPDATE ME to your testnet contract
+    sg721: "stars1us64srkst6ageruatsd3w4x0ulftcngmkp73nqnve3zzflh4w03qv4k7n5", // UPDATE ME to your testnet contract
+    minter: "stars1carltzthz02mc7rlpa97yhedrr4j5g3e4c3jz3wxenmjuuvxlttsknrsk2", // UPDATE ME to your testnet contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
     thumbFiletype: ".png", // UPDATE ME to Your total mints
@@ -24,8 +24,8 @@ module.exports = {
     rest: "https://lcd-stargaze.keplr.app",
     chainId: "stargaze-1",
     // Custom values here
-    sg721: "stars19w7nrfanq6jj7ejp9jglae5c2734ud3zmmkazwcekqxzucwjd32sep8yp9", // UPDATE ME to your production contract
-    minter: "stars1kh5e4wajfkv822esuhtsn6veak02085neh2m6flfmujeht2nmztshzy257", // UPDATE ME to your production contract
+    sg721: "stars1us64srkst6ageruatsd3w4x0ulftcngmkp73nqnve3zzflh4w03qv4k7n5", // UPDATE ME to your production contract
+    minter: "stars1carltzthz02mc7rlpa97yhedrr4j5g3e4c3jz3wxenmjuuvxlttsknrsk2", // UPDATE ME to your production contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
     thumbFiletype: ".png", // UPDATE ME to Your total mints
