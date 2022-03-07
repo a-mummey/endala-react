@@ -4,7 +4,7 @@ import { mintedCountState } from "../state";
 
 function ProgressBar() {
   const mintedCount = useRecoilValue(mintedCountState);
-  const mintedCountVal = mintedCount == "?" ? 0 : mintedCount;
+  const mintedCountVal = mintedCount === "?" ? 0 : mintedCount;
   const totalMints = config.totalNumMints;
   return (
     <div id="mint-progress-wrap" className="container">

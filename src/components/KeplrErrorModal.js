@@ -37,8 +37,9 @@ function KeplrErrorModal() {
             <h3>Could not connect with Keplr Wallet</h3>
           </header>
           <p>
-            Keplr Wallet is required for the proper functioning of this website.
-            Please try one of the following options:
+            Keplr Wallet is required for some of the functionality on this site.
+            You may still browse around, but the experience may be limited.
+            Please try one of the following options to enable all functionality:
           </p>
           <hr></hr>
           <ul>

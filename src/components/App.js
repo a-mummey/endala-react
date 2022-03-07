@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Gallery from "../pages/Gallery";
 import StateSubscriber from "./StateSubscriber";
 import Footer from "./Footer";
+import KeplrErrorModal from "../components/KeplrErrorModal";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Footer></Footer>
+      <KeplrErrorModal></KeplrErrorModal>
     </div>
   );
 }
