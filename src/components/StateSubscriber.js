@@ -46,7 +46,6 @@ function StateSubscriber() {
 
       const loadAllTokens = async () => {
         const helper = await asyncNftHelper();
-        const accountId = currentAccount.valueOrThrow();
         let allTokensStartAfter = null;
         let allTokens = [];
 

@@ -21,8 +21,6 @@ function KeplrErrorModal() {
     setViewedKeplrMessage(true);
   };
 
-  console.log(viewedKeplrMessage);
-
   if (isKeplrError && !viewedKeplrMessage) {
     return (
       <dialog className="keplrError" open>

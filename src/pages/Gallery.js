@@ -3,6 +3,8 @@ import { useRecoilValueLoadable } from "recoil";
 import NftDetails from "../components/NftDetails";
 import { allMintedTokensState, myMintedTokensState } from "../state";
 import "./Gallery.css";
+import HeaderMetaTags from "../components/HeaderMetaTags";
+import { thumbUrl } from "../utils/UrlHelper";
 
 function endalaList(tokenIds) {
   return tokenIds.map((item, index) => (
@@ -28,6 +30,10 @@ function MyEndalas() {
   } else {
     currentTokenId = 1;
   }
+  const metaTags = {
+    title: `Endala #${currentTokenId}`,
+    image: thumbUrl(currentTokenId),
+  };
 
   return (
     <div className="container-fluid">
@@ -43,6 +49,7 @@ function MyEndalas() {
           <NftDetails tokenId={currentTokenId}></NftDetails>
         </div>
       </div>
+      <HeaderMetaTags metaTags={metaTags}></HeaderMetaTags>
     </div>
   );
 }

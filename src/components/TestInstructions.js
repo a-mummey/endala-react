@@ -13,6 +13,7 @@ function TestInstructions() {
           <a
             href="https://discord.com/channels/755548171941445642/940653213022031912"
             target="_blank"
+            rel="noreferrer"
           >
             faucet
           </a>

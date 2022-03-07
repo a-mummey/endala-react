@@ -1,13 +1,7 @@
-import {
-  atom,
-  atomFamily,
-  DefaultValue,
-  selector,
-  selectorFamily,
-} from "recoil";
+import log from "loglevel";
+import { atom, DefaultValue, selector, selectorFamily } from "recoil";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 import asyncNftHelper from "./utils/AsyncNftHelper";
-import log from "loglevel";
 
 // This keeps the current client and its status
 const keplrClientState = atom({
