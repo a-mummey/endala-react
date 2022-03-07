@@ -1,5 +1,6 @@
 import { calculateFee, coins, GasPrice } from "@cosmjs/stargate";
 import log from "loglevel";
+import { allRaritiesUrl, metaUrl, rarityUrl, thumbUrl } from "./UrlHelper";
 
 class NftHelper {
   config;
@@ -12,26 +13,20 @@ class NftHelper {
   }
 
   getAllRarities = async () => {
-    const r = await window.fetch(
-      `${this.config.fileUrlRarities}/rarities${this.config.rarityType}`
-    );
+    const r = await window.fetch(allRaritiesUrl());
     return await r.json();
   };
 
   getNftData = async (tokenId) => {
-    const rarityP = await window.fetch(
-      `${this.config.fileUrlRarities}/${tokenId}${this.config.rarityType}`
-    );
-    const metaP = await window.fetch(
-      `${this.config.fileUrlMetadata}/${tokenId}${this.config.metadataType}`
-    );
+    const rarityP = await window.fetch(rarityUrl(tokenId));
+    const metaP = await window.fetch(metaUrl(tokenId));
 
     const rarity = await rarityP.json();
     const meta = await metaP.json();
 
     return {
       tokenId,
-      imageUrl: `${this.config.fileUrlThumbnails}/${tokenId}${this.config.thumbFiletype}`,
+      imageUrl: thumbUrl(tokenId),
       rarity,
       meta,
       total: this.config.totalNumMints,

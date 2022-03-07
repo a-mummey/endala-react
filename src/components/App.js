@@ -7,6 +7,7 @@ import Gallery from "../pages/Gallery";
 import Home from "../pages/Home";
 import MyEndalas from "../pages/MyEndalas";
 import StateSubscriber from "./StateSubscriber";
+import Footer from "./Footer";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Footer></Footer>
     </div>
   );
 }

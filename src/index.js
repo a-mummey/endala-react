@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import config from "./config";
 import log from "loglevel";
+import "./pico.scss";
+import "./index.css";
 
 // import client from "./utils/KeplrClient";
 

@@ -1,6 +1,7 @@
 import { atom, DefaultValue, selector, selectorFamily } from "recoil";
 import asyncKeplrClient from "./utils/AsyncKeplrClient";
 import asyncNftHelper from "./utils/AsyncNftHelper";
+import log from "loglevel";
 
 // This keeps the current client and its status
 const keplrClientState = atom({
@@ -80,7 +81,12 @@ const keplrDerviedState = selector({
           set(mintingState, false);
           set(keplrClientSelectorFamily("state"), "loaded");
           break;
+        case "mint_error":
+          set(mintingState, false);
+          set(keplrClientSelectorFamily("state"), "mint_error");
+          break;
         default:
+          log.error(`Unknown state value: ${newValue}`);
         // Unsure
       }
     }

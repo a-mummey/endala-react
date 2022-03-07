@@ -9,11 +9,13 @@ module.exports = {
     minter: "stars1carltzthz02mc7rlpa97yhedrr4j5g3e4c3jz3wxenmjuuvxlttsknrsk2", // UPDATE ME to your testnet contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".png", // UPDATE ME to Your total mints
-    metadataType: ".json", // UPDATE ME to Your total mints
-    rarityType: ".json", // UPDATE ME to Your total mints
+    imageFiletype: ".png",
+    thumbFiletype: ".png",
+    metadataType: ".json",
+    rarityType: ".json",
     fileBase: "https://files.endala.xyz/",
-    fileUrlThumbnails: "https://files.endala.xyz/nft/thumbnails", // I am hosting cached versions on S3 because its much faster
+    fileUrlImages: "https://files.endala.xyz/nft/images", // I am hosting cached versions on S3 because its much faster
+    fileUrlThumbnails: "https://files.endala.xyz/nft/thumbnails",
     fileUrlMiniThumbs: "https://files.endala.xyz/nft/mini",
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/nft/rarities",
@@ -28,10 +30,12 @@ module.exports = {
     minter: "stars1carltzthz02mc7rlpa97yhedrr4j5g3e4c3jz3wxenmjuuvxlttsknrsk2", // UPDATE ME to your production contract
     mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".png", // UPDATE ME to Your total mints
-    metadataType: ".json", // UPDATE ME to Your total mints
-    rarityType: ".json", // UPDATE ME to Your total mints
+    imageFiletype: ".png",
+    thumbFiletype: ".png",
+    metadataType: ".json",
+    rarityType: ".json",
     fileBase: "https://files.endala.xyz/",
+    fileUrlImages: "https://files.endala.xyz/nft/images", // I am hosting cached versions on S3 because its much faster
     fileUrlThumbnails: "https://files.endala.xyz/nft/thumbnails",
     fileUrlMiniThumbs: "https://files.endala.xyz/nft/mini",
     fileUrlMetadata: "https://files.endala.xyz/nft/metadata",

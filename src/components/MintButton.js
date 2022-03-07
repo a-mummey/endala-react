@@ -34,6 +34,11 @@ const mintStates = {
     disabled: true,
     loading: false,
   },
+  mint_error: {
+    label: "Mint Error",
+    disabled: true,
+    loading: false,
+  },
 };
 
 function MintButton() {
@@ -62,12 +67,12 @@ function MintButton() {
             setKeplrState("loaded");
           } else {
             log.error(e);
-            setKeplrState("error");
+            setKeplrState("mint_error");
             setTimeout(5000, () => setKeplrState("loaded"));
           }
         });
     } catch (e) {
-      setKeplrState("error");
+      setKeplrState("mint_error");
       setTimeout(5000, () => setKeplrState("loaded"));
     }
   };
