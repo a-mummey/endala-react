@@ -19,8 +19,6 @@ module.exports = {
     fileUrlMiniThumbs: "https://files.endala.xyz/nft/mini",
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/nft/rarities",
-    numHeroImages: 6,
-    numLatest: 25,
   },
   // Production Values
   production: {
@@ -42,10 +40,12 @@ module.exports = {
     fileUrlMiniThumbs: "https://files.endala.xyz/nft/mini",
     fileUrlMetadata: "https://files.endala.xyz/nft/metadata",
     fileUrlRarities: "https://files.endala.xyz/nft/rarities",
-    numLatest: 25,
   },
   global: {
     testnet: true, // Set to false on Production
     debug: true,
+    numHeroImages: 6,
+    numLatest: 18,
+    numGallery: 18,
   },
 };

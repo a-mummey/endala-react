@@ -1,7 +1,7 @@
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import "./MintModal.css";
-import { newTokenAddedSelector, mintedTokenInfo } from "../state";
 import { Link } from "react-router-dom";
+import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { mintedTokenInfo, newTokenAddedSelector } from "../state";
+import "./MintModal.css";
 
 function MintModal() {
   const setTokenId = useSetRecoilState(newTokenAddedSelector);
@@ -33,10 +33,12 @@ function MintModal() {
                 <i aria-hidden="true"></i>
               </a>
               <hgroup>
-                <h3>{`${nftData.meta.name}: Rank ${nftData.rarity.rank}/${nftData.total}`}</h3>
+                <h3>{`${nftData.meta.name}`}</h3>
                 <h4>
+                  {`Rank: ${nftData.rarity.rank} / ${nftData.total}`}
+                  {" • "}
                   <Link to={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
-                    View In Gallery
+                    View Details
                   </Link>
                 </h4>
               </hgroup>

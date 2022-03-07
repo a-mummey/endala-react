@@ -1,16 +1,12 @@
 import { useRecoilValueLoadable } from "recoil";
-import { nftDetailsSelector } from "../state";
-import NftAttributes from "./NftAttributes";
-import {
-  thumbUrl,
-  miniUrl,
-  metaUrl,
-  rarityUrl,
-  allRaritiesUrl,
-  imageUrl,
-} from "../utils/UrlHelper";
 import config from "../config";
-import { allMintedTokensState, myMintedTokensState } from "../state";
+import {
+  allMintedTokensState,
+  myMintedTokensState,
+  nftDetailsSelector,
+} from "../state";
+import { imageUrl, thumbUrl } from "../utils/UrlHelper";
+import NftAttributes from "./NftAttributes";
 
 function NftDetails({ tokenId }) {
   const nftDetailsLoadable = useRecoilValueLoadable(
@@ -39,22 +35,33 @@ function NftDetails({ tokenId }) {
       isMinted === false ? <h3>This Endala hasn't been minted yet</h3> : <></>;
     return (
       <article>
-        <div className="img-container">
-          <div className="img-preview">
+        <div className="row">
+          <div className="col-sm-6">
             <img src={thumbUrl(tokenId)}></img>
           </div>
-          <div className="img-properties">
-            <hgroup>
-              <h2>{nftDetails.meta.name}</h2>
-              <h3>
-                Rank: {nftDetails.rarity.rank} / {config.totalNumMints}
-              </h3>
-            </hgroup>
+          <div className="col-sm-6">
+            <div className="row justify-content-between">
+              <div className="col-sm-5">
+                <hgroup>
+                  <h2>{nftDetails.meta.name}</h2>
+                  <h3>
+                    Rank: {nftDetails.rarity.rank} / {config.totalNumMints}
+                  </h3>
+                </hgroup>
+              </div>
+              <div className="col-sm-5">
+                <a
+                  href={imageUrl(tokenId)}
+                  role="button"
+                  target={"_blank"}
+                  className="outline"
+                >
+                  Download in HD
+                </a>
+              </div>
+            </div>
             <NftAttributes nftRarity={nftDetails.rarity}></NftAttributes>
             {nftNotMintedMsg}
-            <a href={imageUrl(tokenId)} role="button" target={"_blank"}>
-              Download in HD
-            </a>
           </div>
         </div>
       </article>

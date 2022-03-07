@@ -4,6 +4,7 @@ import "./App.css";
 import Nav from "./Nav";
 import About from "../pages/About";
 import Home from "../pages/Home";
+import NftInfo from "../pages/NftInfo";
 import Gallery from "../pages/Gallery";
 import StateSubscriber from "./StateSubscriber";
 import Footer from "./Footer";
@@ -18,8 +19,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/nft" element={<Gallery />}>
-            <Route path=":tokenId" element={<Gallery />} />
+          <Route path="/nft/:tokenId" element={<NftInfo />}></Route>
+          <Route path="/gallery" element={<Gallery />}>
+            <Route path="/gallery/:page" element={<Gallery />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

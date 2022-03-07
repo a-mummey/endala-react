@@ -9,10 +9,12 @@ module.exports = {
     minter: "stars1jc4gk0ua02kvrpggat77r25226h6hg5rrfwlywu7zclkdscjwlhqd56hmm", // UPDATE ME to your testnet contract
     mintPriceStars: 200, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".jpg", // UPDATE ME to Your total mints
-    metadataType: ".json", // UPDATE ME to Your total mints
-    rarityType: ".json", // UPDATE ME to Your total mints
+    imageFiletype: ".png",
+    thumbFiletype: ".png",
+    metadataType: ".json",
+    rarityType: ".json",
     fileBase: "https://files.endala.xyz/",
+    fileUrlImages: "https://files.endala.xyz/testnet/images", // I am hosting cached versions on S3 because its much faster (but this could also be an IPFS url)
     fileUrlThumbnails: "https://files.endala.xyz/testnet/thumbnails", // I am hosting cached versions on S3 because its much faster (but this could also be an IPFS url)
     fileUrlMiniThumbs: "https://files.endala.xyz/testnet/mini",
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
@@ -24,21 +26,26 @@ module.exports = {
     rest: "https://lcd-stargaze.keplr.app",
     chainId: "stargaze-1",
     // Custom values here
-    sg721: "stars1...", // UPDATE ME to your production contract
-    minter: "stars1...", // UPDATE ME to your production contract
-    mintPriceStars: 200, // UPDATE ME to Your Mint Price
+    sg721: "stars1us64srkst6ageruatsd3w4x0ulftcngmkp73nqnve3zzflh4w03qv4k7n5", // UPDATE ME to your production contract
+    minter: "stars1carltzthz02mc7rlpa97yhedrr4j5g3e4c3jz3wxenmjuuvxlttsknrsk2", // UPDATE ME to your production contract
+    mintPriceStars: 250, // UPDATE ME to Your Mint Price
     totalNumMints: 641, // UPDATE ME to Your total mints
-    thumbFiletype: ".jpg",
+    imageFiletype: ".png",
+    thumbFiletype: ".png",
     metadataType: ".json",
-    rarityType: ".json", // UPDATE ME to Your total mints
+    rarityType: ".json",
     fileBase: "https://files.endala.xyz/",
-    fileUrlThumbnails: "https://files.endala.xyz/main/thumbnails",
-    fileUrlMiniThumbs: "https://files.endala.xyz/testnet/mini",
-    fileUrlMetadata: "https://files.endala.xyz/main/metadata",
-    fileUrlRarities: "https://files.endala.xyz/main/rarities",
+    fileUrlImages: "https://files.endala.xyz/nft/images", // I am hosting cached versions on S3 because its much faster
+    fileUrlThumbnails: "https://files.endala.xyz/nft/thumbnails",
+    fileUrlMiniThumbs: "https://files.endala.xyz/nft/mini",
+    fileUrlMetadata: "https://files.endala.xyz/nft/metadata",
+    fileUrlRarities: "https://files.endala.xyz/nft/rarities",
   },
   global: {
     testnet: true, // Set to false on production
     debug: true, // Set to false on production
+    numHeroImages: 6,
+    numLatest: 25,
+    numGallery: 25,
   },
 };

@@ -1,57 +1,37 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
-import NftDetails from "../components/NftDetails";
-import { allMintedTokensState, myMintedTokensState } from "../state";
-import "./Gallery.css";
-import HeaderMetaTags from "../components/HeaderMetaTags";
-import { thumbUrl } from "../utils/UrlHelper";
+import MiniThumbList from "../components/MiniThumbList";
+import Pagination from "../components/Pagination";
+import config from "../config";
+import { allMintedTokensState } from "../state";
 
-function endalaList(tokenIds) {
-  return tokenIds.map((item, index) => (
-    <li key={item}>
-      <Link to={`/nft/${item}`}>Endala #{item}</Link>
-    </li>
-  ));
-}
-function MyEndalas() {
-  let params = useParams();
+function Gallery() {
+  const params = useParams();
+  const pageParam = isNaN(parseInt(params.page)) ? 1 : parseInt(params.page);
   const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
-  const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
-  const myTokens = myMintedTokens.valueMaybe() || [];
 
-  let currentTokenId;
-  if (params.tokenId) {
-    currentTokenId = params.tokenId;
-  } else if (
-    Array.isArray(allMintedTokens.valueMaybe()) &&
-    allMintedTokens.valueMaybe()[0]
-  ) {
-    currentTokenId = allMintedTokens.valueMaybe()[0];
-  } else {
-    currentTokenId = 1;
-  }
-  const metaTags = {
-    title: `Endala #${currentTokenId}`,
-    image: thumbUrl(currentTokenId),
+  const tokenIds = allMintedTokens.valueMaybe() || [];
+  const tokenIdsStart = (pageParam - 1) * config.numGallery;
+  const pagedTokenIds = [...tokenIds]
+    .sort((a, b) => parseInt(a) - parseInt(b))
+    .slice(tokenIdsStart, tokenIdsStart + config.numGallery);
+
+  const pagination = {
+    totalItems: tokenIds.length,
+    currentPage: pageParam,
+    linkBase: "gallery",
+    itemsPerPage: config.numGallery,
   };
 
   return (
-    <div className="container-fluid">
-      <div className="endalas-container">
-        <div className="leftCol">
-          <aside>
-            <nav>
-              <ul>{endalaList(myTokens)}</ul>
-            </nav>
-          </aside>
-        </div>
-        <div className="mainCol">
-          <NftDetails tokenId={currentTokenId}></NftDetails>
-        </div>
+    <div className="container">
+      <h2>Minted Endalas</h2>
+      <div className="grid">
+        <MiniThumbList tokenIds={pagedTokenIds}></MiniThumbList>
       </div>
-      <HeaderMetaTags metaTags={metaTags}></HeaderMetaTags>
+      <Pagination pagination={pagination}></Pagination>
     </div>
   );
 }
 
-export default MyEndalas;
+export default Gallery;

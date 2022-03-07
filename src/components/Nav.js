@@ -14,7 +14,7 @@ function Nav() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/nft">Gallery</Link>
+          <Link to="/gallery">Gallery</Link>
         </li>
         <li>
           <Link to="/about">About</Link>

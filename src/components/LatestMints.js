@@ -2,6 +2,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { allMintedTokensState } from "../state";
 import MiniThumbList from "./MiniThumbList";
 import config from "../config";
+import { Link } from "react-router-dom";
 
 function LatestMints() {
   const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
@@ -15,6 +16,13 @@ function LatestMints() {
       <div className="grid">
         <MiniThumbList tokenIds={latestTokenIds}></MiniThumbList>
       </div>
+      <nav className="pagination">
+        <ul>
+          <li>
+            <Link to={`/gallery`}>See More &gt;</Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

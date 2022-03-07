@@ -15,6 +15,7 @@ code {
 nav a {
   border-radius: 0 !important;
 }
-article header h3 {
+article header h3,
+article header hgroup {
   margin-bottom: 0;
 }
