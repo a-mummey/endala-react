@@ -10,6 +10,7 @@ import {
   keplrDerviedState,
   newTokenAddedSelector,
   mintedCountState,
+  mintErrorDetails,
 } from "../state";
 import asyncNftHelper from "../utils/AsyncNftHelper";
 
@@ -46,6 +47,7 @@ function MintButton() {
   const kState = useRecoilValueLoadable(keplrDerviedState);
   const setKeplrState = useSetRecoilState(keplrDerviedState);
   const setNewToken = useSetRecoilState(newTokenAddedSelector);
+  const setMintErrorDetails = useSetRecoilState(mintErrorDetails);
 
   const buttonState =
     kState.map((s) => mintStates[s]).valueMaybe() || mintStates.loading;
@@ -68,12 +70,12 @@ function MintButton() {
           } else {
             log.error(e);
             setKeplrState("mint_error");
-            setTimeout(5000, () => setKeplrState("loaded"));
+            setMintErrorDetails(e.message);
           }
         });
     } catch (e) {
       setKeplrState("mint_error");
-      setTimeout(5000, () => setKeplrState("loaded"));
+      setMintErrorDetails(e.message);
     }
   };
   return (

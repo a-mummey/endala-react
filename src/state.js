@@ -98,6 +98,11 @@ const keplrDerviedState = selector({
   },
 });
 
+const mintErrorDetails = atom({
+  key: "mintErrorDetails",
+  default: null,
+});
+
 // Total number of mints
 const mintedCountState = atom({
   key: "mintedCountState",
@@ -227,4 +232,5 @@ export {
   allMintedTokensState,
   myMintedTokensState,
   keplrErrorMsgViewed,
+  mintErrorDetails,
 };
