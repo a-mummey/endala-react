@@ -2,6 +2,7 @@ import {
   currentAccountSelector,
   allMintedTokensState,
   myMintedTokensState,
+  keplrDerviedState,
 } from "../state";
 import { useRecoilValueLoadable, useRecoilCallback } from "recoil";
 import { useEffect } from "react";
@@ -26,6 +27,9 @@ function StateSubscriber() {
         ...new Set([...current, ...tokenIds]),
       ]);
     }
+  });
+  const resetKeplr = useRecoilCallback(({ reset }) => (tokenIds) => {
+    reset(keplrDerviedState);
   });
   // Once it is available, we'll pagniate through some of the APIs, updating loaded state as it comes
   useEffect(() => {
@@ -58,6 +62,7 @@ function StateSubscriber() {
       };
       loadAllMyTokens();
       loadAllTokens();
+      window.addEventListener("keplr_keystorechange", resetKeplr);
     } else {
       return [];
     }

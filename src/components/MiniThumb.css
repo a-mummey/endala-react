@@ -1,4 +1,4 @@
-.miniThumb {
+.miniThumb figure > a {
   height: 200px;
   display: block;
 }
@@ -7,4 +7,22 @@
   height: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+}
+.miniThumb figcaption {
+  background-color: #141e26;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  box-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.06),
+    0 0.125rem 2rem rgba(0, 0, 0, 0.12), 0 0 0 0.0625rem rgba(0, 0, 0, 0.036);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.miniThumb figcaption > a {
+  font-size: 75%;
+}
+.miniThumb figcaption > strong {
+  line-height: 1em;
+  cursor: help;
 }

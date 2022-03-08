@@ -10,20 +10,26 @@ function LatestMints() {
   const latestTokenIds = [...tokenIds]
     .sort((a, b) => parseInt(b) - parseInt(a))
     .slice(0, config.numLatest);
-  return (
-    <div className="container">
-      <h2>Latest Mints</h2>
-      <div className="grid">
-        <MiniThumbList tokenIds={latestTokenIds}></MiniThumbList>
+  const seeMore =
+    tokenIds.length > config.numLatest ? (
+      <Link to={`/gallery`}>See More &gt;</Link>
+    ) : (
+      <></>
+    );
+  if (tokenIds.length) {
+    return (
+      <div className="container">
+        <h2>Latest Mints</h2>
+        <div className="grid">
+          <MiniThumbList tokenIds={latestTokenIds}></MiniThumbList>
+        </div>
+        <nav className="pagination">
+          <ul>
+            <li>{seeMore}</li>
+          </ul>
+        </nav>
       </div>
-      <nav className="pagination">
-        <ul>
-          <li>
-            <Link to={`/gallery`}>See More &gt;</Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  );
+    );
+  } else return <></>;
 }
 export default LatestMints;
