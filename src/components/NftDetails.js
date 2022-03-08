@@ -36,10 +36,10 @@ function NftDetails({ tokenId }) {
     return (
       <article>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <img src={thumbUrl(tokenId)}></img>
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-5">
             <div className="row justify-content-between">
               <div className="col-sm-5">
                 <hgroup>

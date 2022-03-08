@@ -19,3 +19,8 @@ article header h3,
 article header hgroup {
   margin-bottom: 0;
 }
+
+th,
+td {
+  font-size: 75%;
+}

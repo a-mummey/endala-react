@@ -25,7 +25,7 @@ function NftAttributes({ nftRarity }) {
         <tr>
           <th scope="col">Attribute</th>
           <th scope="col">Value</th>
-          <th scope="col">% With</th>
+          <th scope="col">%&nbsp;With</th>
           <th scope="col">Score</th>
         </tr>
       </thead>
