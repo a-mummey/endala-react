@@ -178,6 +178,16 @@ const newTokenAddedSelector = selector({
   },
 });
 
+const sortedMintedTokensSelector = selector({
+  key: "sortedMintedTokensSelector",
+  get: ({ get }) => {
+    const allTokens = get(allMintedTokensState);
+    if (allTokens) {
+      return [...allTokens].sort((a, b) => parseInt(a) - parseInt(b));
+    }
+  },
+});
+
 // The last minted token information
 const mintedTokenInfo = selector({
   key: "mintedTokenInfo",
@@ -233,4 +243,5 @@ export {
   myMintedTokensState,
   keplrErrorMsgViewed,
   mintErrorDetails,
+  sortedMintedTokensSelector,
 };

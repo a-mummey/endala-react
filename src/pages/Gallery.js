@@ -3,18 +3,19 @@ import { useRecoilValueLoadable } from "recoil";
 import MiniThumbList from "../components/MiniThumbList";
 import Pagination from "../components/Pagination";
 import config from "../config";
-import { allMintedTokensState } from "../state";
+import { sortedMintedTokensSelector } from "../state";
 
 function Gallery() {
   const params = useParams();
   const pageParam = isNaN(parseInt(params.page)) ? 1 : parseInt(params.page);
-  const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
+  const allMintedTokens = useRecoilValueLoadable(sortedMintedTokensSelector);
 
   const tokenIds = allMintedTokens.valueMaybe() || [];
   const tokenIdsStart = (pageParam - 1) * config.numGallery;
-  const pagedTokenIds = [...tokenIds]
-    .sort((a, b) => parseInt(a) - parseInt(b))
-    .slice(tokenIdsStart, tokenIdsStart + config.numGallery);
+  const pagedTokenIds = [...tokenIds].slice(
+    tokenIdsStart,
+    tokenIdsStart + config.numGallery
+  );
 
   const pagination = {
     totalItems: tokenIds.length,
