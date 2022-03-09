@@ -16,7 +16,9 @@ function KeplrMintError({ closeFunc }) {
     </>
   );
 
-  if (mintError.includes("Code: 5")) {
+  if (mintError.includes("Minting has not started yet")) {
+    errorMsg = "Minting has not started yet.";
+  } else if (mintError.includes("Code: 5")) {
     errorMsg = "This address has exceeded the maximum amount of allowed mints.";
   } else if (mintError.includes("code 11") || mintError.includes("Code: 11")) {
     errorMsg =
