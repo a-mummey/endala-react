@@ -1,0 +1,16 @@
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.about {
+  img {
+    max-width: 500px;
+    float: left;
+    margin: 0 20px 20px 0;
+  }
+  @include clearfix;
+}

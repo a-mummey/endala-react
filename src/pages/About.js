@@ -1,5 +1,6 @@
+import AboutComponent from "../components/AboutComponent";
 function About() {
-  return <div>About</div>;
+  return <AboutComponent></AboutComponent>;
 }
 
 export default About;
