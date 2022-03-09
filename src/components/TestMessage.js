@@ -2,15 +2,14 @@ import config from "../config";
 import TestInstructions from "./TestInstructions";
 
 function TestMessage() {
-  const testMessage = config.testnet ? (
-    <TestInstructions></TestInstructions>
-  ) : (
-    ""
-  );
-  return (
+  return config.showTestnetMsg ? (
     <div className="container">
-      <article>{testMessage}</article>
+      <article>
+        <TestInstructions></TestInstructions>
+      </article>
     </div>
+  ) : (
+    <></>
   );
 }
 export default TestMessage;

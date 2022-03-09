@@ -44,6 +44,7 @@ module.exports = {
   global: {
     testnet: true, // Set to false on production
     debug: true, // Set to false on production
+    showTestnetMsg: true,
     numHeroImages: 6,
     numLatest: 25,
     numGallery: 25,
