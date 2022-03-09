@@ -29,7 +29,7 @@ function Hero() {
 
       // Render a countdown
       return (
-        <button className="contrast" disabled>
+        <button className="secondary" disabled>
           {`${d} ${h} ${m} ${s}`}
         </button>
       );
