@@ -4,11 +4,13 @@ import { allRaritiesUrl, metaUrl, rarityUrl, thumbUrl } from "./UrlHelper";
 
 class NftHelper {
   config;
-  client;
+  signingClient;
+  readOnlyClient;
   limit = 30;
   constructor(client, config) {
     this.offlineSigner = client.offlineSigner;
-    this.client = client.signingClient;
+    this.signingClient = client.signingClient;
+    this.readOnlyClient = client.readOnlyClient;
     this.config = config;
   }
 
@@ -35,9 +37,12 @@ class NftHelper {
 
   // https://github.com/public-awesome/stargaze-contracts/blob/main/contracts/sg721/schema/query_msg.json
   getProgress = async () => {
-    const tokenQuery = await this.client.queryContractSmart(this.config.sg721, {
-      num_tokens: {},
-    });
+    const tokenQuery = await this.readOnlyClient.queryContractSmart(
+      this.config.sg721,
+      {
+        num_tokens: {},
+      }
+    );
     return {
       minted: tokenQuery.count,
       total: this.config.totalNumMints,
@@ -55,7 +60,7 @@ class NftHelper {
       q.tokens.start_after = startAfter;
     }
     // console.log("getMyMintedTokens", q);
-    const { tokens } = await this.client.queryContractSmart(
+    const { tokens } = await this.signingClient.queryContractSmart(
       this.config.sg721,
       q
     );
@@ -72,7 +77,7 @@ class NftHelper {
       q.all_tokens.start_after = startAfter;
     }
     // console.log("getAllMintedTokens", q);
-    const { tokens } = await this.client.queryContractSmart(
+    const { tokens } = await this.readOnlyClient.queryContractSmart(
       this.config.sg721,
       q
     );
@@ -91,7 +96,7 @@ class NftHelper {
     const msg = { mint: {} };
     log.debug(msg);
 
-    const result = await this.client.execute(
+    const result = await this.signingClient.execute(
       accounts[0].address,
       this.config.minter,
       msg,

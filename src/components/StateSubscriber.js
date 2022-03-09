@@ -48,24 +48,23 @@ function StateSubscriber() {
           setMyTokens(myTokens);
         } while (myTokens.length >= helper.limit);
       };
-
-      const loadAllTokens = async () => {
-        const helper = await asyncNftHelper();
-        let allTokensStartAfter = null;
-        let allTokens = [];
-
-        do {
-          allTokens = await helper.getAllMintedTokens(allTokensStartAfter);
-          allTokensStartAfter = allTokens[allTokens.length - 1];
-          setAllTokens(allTokens);
-        } while (allTokens.length >= helper.limit);
-      };
       loadAllMyTokens();
-      loadAllTokens();
       window.addEventListener("keplr_keystorechange", resetKeplr);
-    } else {
-      return [];
     }
+
+    const loadAllTokens = async () => {
+      const helper = await asyncNftHelper();
+      let allTokensStartAfter = null;
+      let allTokens = [];
+
+      do {
+        allTokens = await helper.getAllMintedTokens(allTokensStartAfter);
+        allTokensStartAfter = allTokens[allTokens.length - 1];
+        setAllTokens(allTokens);
+      } while (allTokens.length >= helper.limit);
+    };
+
+    loadAllTokens();
   });
 
   return <></>;

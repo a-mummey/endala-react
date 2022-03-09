@@ -1,4 +1,7 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import {
+  SigningCosmWasmClient,
+  CosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
 import { addTestnetToKeplr } from "./KeplrTestnet";
 
 class KeplrClient {
@@ -29,7 +32,7 @@ class KeplrClient {
     };
 
     await checkChainOrTestnet();
-
+    const readOnlyClient = await CosmWasmClient.connect(config.rpcEndpoint);
     if (window.getOfflineSignerAuto) {
       // Setup signer
       const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
@@ -43,9 +46,9 @@ class KeplrClient {
           gasPrice,
         }
       );
-      this.client = { signingClient, offlineSigner };
+      this.client = { signingClient, offlineSigner, readOnlyClient };
     } else {
-      throw Error("Keplr not available");
+      this.client = { readOnlyClient };
     }
   };
 }

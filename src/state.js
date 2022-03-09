@@ -6,15 +6,19 @@ import asyncNftHelper from "./utils/AsyncNftHelper";
 // This keeps the current client and its status
 const keplrClientState = atom({
   key: "keplrClientState",
-  default: { client: null, state: "loading" },
+  default: { client: null, readOnlyClient: null, state: "loading" },
   effects: [
     async ({ setSelf, onSet }) => {
       const initialize = async () => {
         try {
           await asyncKeplrClient.loadClient();
-          setSelf({ client: asyncKeplrClient.client, state: "loaded" });
+          setSelf({
+            client: asyncKeplrClient.client,
+            readOnlyClient: asyncKeplrClient.readOnlyClient,
+            state: "loaded",
+          });
         } catch (e) {
-          setSelf({ client: null, state: "error" });
+          setSelf({ client: null, readOnlyClient: null, state: "error" });
         }
       };
       await initialize();
