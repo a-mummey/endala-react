@@ -1,9 +1,21 @@
 import config from "../config";
-import asyncKeplrClient from "./AsyncKeplrClient";
+import AsyncKeplrClient from "./AsyncKeplrClient";
 import NftHelper from "./NftHelper";
 
-const asyncNftHelper = async () => {
-  await asyncKeplrClient.loadClient();
-  return new NftHelper(asyncKeplrClient.client, config);
-};
-export default asyncNftHelper;
+class AsyncNftHelper {
+  static instance;
+  static async getInstance() {
+    if (AsyncNftHelper.instance) {
+      return AsyncNftHelper.instance;
+    } else {
+      AsyncNftHelper.instance = AsyncKeplrClient.getInstance().then(
+        (keplrClient) => {
+          return new NftHelper(keplrClient, config);
+        }
+      );
+      return AsyncKeplrClient.instance;
+    }
+  }
+}
+
+export default AsyncNftHelper;

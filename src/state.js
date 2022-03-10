@@ -1,7 +1,7 @@
 import log from "loglevel";
 import { atom, DefaultValue, selector, selectorFamily } from "recoil";
-import asyncKeplrClient from "./utils/AsyncKeplrClient";
-import asyncNftHelper from "./utils/AsyncNftHelper";
+import AsyncKeplrClient from "./utils/AsyncKeplrClient";
+import AsyncNftHelper from "./utils/AsyncNftHelper";
 
 // This keeps the current client and its status
 const keplrClientState = atom({
@@ -11,10 +11,11 @@ const keplrClientState = atom({
     async ({ setSelf, onSet }) => {
       const initialize = async () => {
         try {
-          await asyncKeplrClient.loadClient();
+          const { client, readOnlyClient } =
+            await AsyncKeplrClient.getInstance();
           setSelf({
-            client: asyncKeplrClient.client,
-            readOnlyClient: asyncKeplrClient.readOnlyClient,
+            client,
+            readOnlyClient,
             state: "loaded",
           });
         } catch (e) {
@@ -115,7 +116,7 @@ const mintedCountState = atom({
     async ({ setSelf, onSet }) => {
       const initialize = async () => {
         try {
-          const helper = await asyncNftHelper();
+          const helper = await AsyncNftHelper.getInstance();
           helper.getProgress().then((progress) => {
             setSelf(progress.minted);
           });
@@ -139,7 +140,7 @@ const raritiesState = atom({
   default: [],
   effects: [
     async ({ setSelf }) => {
-      const helper = await asyncNftHelper();
+      const helper = await AsyncNftHelper.getInstance();
       const rarities = await helper.getAllRarities();
       setSelf(rarities);
     },
@@ -151,7 +152,7 @@ const nftDetailsSelector = selectorFamily({
   key: "singleRaritySelector",
   get: (tokenId) => async () => {
     if (tokenId) {
-      const helper = await asyncNftHelper();
+      const helper = await AsyncNftHelper.getInstance();
       const nftData = await helper.getNftData(tokenId);
       return nftData;
     }
@@ -196,7 +197,7 @@ const sortedMintedTokensSelector = selector({
 const mintedTokenInfo = selector({
   key: "mintedTokenInfo",
   get: async ({ get }) => {
-    const helper = await asyncNftHelper();
+    const helper = await AsyncNftHelper.getInstance();
     const latestTokenId = get(lastMintedTokenIdState);
 
     if (latestTokenId) {
@@ -214,7 +215,7 @@ const currentAccountSelector = selector({
   get: async ({ get }) => {
     const kState = get(keplrDerviedState);
     if (kState === "loaded") {
-      const { client } = await asyncKeplrClient;
+      const { client } = await AsyncKeplrClient.getInstance();
       const accounts = await client.offlineSigner.getAccounts();
       if (Array.isArray(accounts) && accounts[0]) {
         return accounts[0].address;

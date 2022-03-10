@@ -4,54 +4,43 @@ import {
 } from "@cosmjs/cosmwasm-stargate";
 import { addTestnetToKeplr } from "./KeplrTestnet";
 
-class KeplrClient {
-  config;
-  client;
+const KeplrClient = async (config) => {
+  const prefix = "wasm";
+  const gasPrice = null;
 
-  constructor(config) {
-    this.config = config;
-  }
+  // hack foo to wait for keplr to be available
+  await new Promise((r) => setTimeout(r, 1000));
 
-  loadClient = async () => {
-    this.client = null;
-    const prefix = "wasm";
-    const gasPrice = null;
-    const config = this.config;
+  // check browser compatibility
 
-    // hack foo to wait for keplr to be available
-    await new Promise((r) => setTimeout(r, 1000));
-
-    // check browser compatibility
-
-    const checkChainOrTestnet = async () => {
-      if (config.testnet) {
-        const testnet = await addTestnetToKeplr();
-      } else {
-        console.log("connecting");
-        const chain = await window.keplr.enable(config.chainId);
-      }
-    };
-
-    await checkChainOrTestnet();
-    const readOnlyClient = await CosmWasmClient.connect(config.rpcEndpoint);
-    if (window.getOfflineSignerAuto) {
-      // Setup signer
-      const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
-
-      // Init SigningCosmWasmClient client
-      const signingClient = await SigningCosmWasmClient.connectWithSigner(
-        config.rpcEndpoint,
-        offlineSigner,
-        {
-          prefix,
-          gasPrice,
-        }
-      );
-      this.client = { signingClient, offlineSigner, readOnlyClient };
+  const checkChainOrTestnet = async () => {
+    if (config.testnet) {
+      const testnet = await addTestnetToKeplr();
     } else {
-      this.client = { readOnlyClient };
+      console.log("connecting");
+      const chain = await window.keplr.enable(config.chainId);
     }
   };
-}
+
+  await checkChainOrTestnet();
+  const readOnlyClient = await CosmWasmClient.connect(config.rpcEndpoint);
+  if (window.getOfflineSignerAuto) {
+    // Setup signer
+    const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
+
+    // Init SigningCosmWasmClient client
+    const client = await SigningCosmWasmClient.connectWithSigner(
+      config.rpcEndpoint,
+      offlineSigner,
+      {
+        prefix,
+        gasPrice,
+      }
+    );
+    return { client, offlineSigner, readOnlyClient };
+  } else {
+    return { readOnlyClient };
+  }
+};
 
 export default KeplrClient;

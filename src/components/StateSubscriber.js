@@ -6,7 +6,7 @@ import {
 } from "../state";
 import { useRecoilValueLoadable, useRecoilCallback } from "recoil";
 import { useEffect } from "react";
-import asyncNftHelper from "../utils/AsyncNftHelper";
+import AsyncNftHelper from "../utils/AsyncNftHelper";
 
 function StateSubscriber() {
   // I had trouble doing this without a separate compontent
@@ -35,7 +35,7 @@ function StateSubscriber() {
   useEffect(() => {
     if (currentAccount.valueMaybe()) {
       const loadAllMyTokens = async () => {
-        const helper = await asyncNftHelper();
+        const helper = await AsyncNftHelper.getInstance();
         const accountId = currentAccount.valueOrThrow();
         let myTokensStartAfter = null;
         let myTokens = [];
@@ -53,7 +53,8 @@ function StateSubscriber() {
     }
 
     const loadAllTokens = async () => {
-      const helper = await asyncNftHelper();
+      const helper = await AsyncNftHelper.getInstance();
+
       let allTokensStartAfter = null;
       let allTokens = [];
 

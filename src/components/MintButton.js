@@ -12,7 +12,7 @@ import {
   mintedCountState,
   mintErrorDetails,
 } from "../state";
-import asyncNftHelper from "../utils/AsyncNftHelper";
+import AsyncNftHelper from "../utils/AsyncNftHelper";
 
 const mintStates = {
   loaded: {
@@ -54,7 +54,7 @@ function MintButton() {
 
   const Mint = async () => {
     setKeplrState("minting");
-    const nftHelper = await asyncNftHelper();
+    const nftHelper = await AsyncNftHelper.getInstance();
     try {
       nftHelper
         .mintSender()
