@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useRecoilValueLoadable } from "recoil";
 import { myMintedTokensState } from "../state";
 import { miniUrl } from "../utils/UrlHelper";
-import "./MiniThumb.css";
+import styles from "./MiniThumb.module.scss";
 
 function MiniThumb({ tokenId }) {
   const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
@@ -13,13 +13,17 @@ function MiniThumb({ tokenId }) {
     <></>
   );
   return (
-    <div className="miniThumb col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <div className={`${styles.miniThumb} col-sm-6 col-md-4 col-lg-3 col-xl-2`}>
       <figure>
-        <Link to={`/nft/${tokenId}`} className="miniThumb">
-          <img src={miniUrl(tokenId)}></img>
+        <Link href={`/nft/${tokenId}`} className="miniThumb">
+          <a>
+            <img src={miniUrl(tokenId)} />
+          </a>
         </Link>
         <figcaption>
-          <Link to={`/nft/${tokenId}`}>Endala #{tokenId}</Link>
+          <Link href={`/nft/${tokenId}`}>
+            <a>Endala #{tokenId}</a>
+          </Link>
           {myMintIdentifier}
         </figcaption>
       </figure>
