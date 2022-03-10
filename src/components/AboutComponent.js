@@ -1,9 +1,9 @@
 import { thumbUrl } from "../utils/UrlHelper";
-import "./AboutComponent.scss";
+import styles from "./AboutComponent.module.scss";
 
 function AboutComponent() {
   return (
-    <div className="container about">
+    <div className={`container ${styles.about}`}>
       <h1>About Endala</h1>
       <img src={thumbUrl(15)}></img>
       <p>

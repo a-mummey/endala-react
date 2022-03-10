@@ -2,7 +2,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { allMintedTokensState } from "../state";
 import MiniThumbList from "./MiniThumbList";
 import config from "../config";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function LatestMints() {
   const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
@@ -12,7 +12,9 @@ function LatestMints() {
     .slice(0, config.numLatest);
   const seeMore =
     tokenIds.length > config.numLatest ? (
-      <Link to={`/gallery`}>See More &gt;</Link>
+      <Link href={`/gallery`}>
+        <a>See More &gt;</a>
+      </Link>
     ) : (
       <></>
     );

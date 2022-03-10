@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import "./Pagination.css";
+import Link from "next/link";
+// import styles from "./Pagination.module.scss";
 
 function Pagination({
   pagination: {
@@ -46,14 +46,18 @@ function Pagination({
 
   const previous = !isFirstPage ? (
     <li>
-      <Link to={`/${linkBase}/${prevPage}`}>{prevLabelUse}</Link>
+      <Link href={`/${linkBase}/${prevPage}`}>
+        <a>{prevLabelUse}</a>
+      </Link>
     </li>
   ) : (
     <></>
   );
   const next = !isLastPage ? (
     <li>
-      <Link to={`/${linkBase}/${nextPage}`}>{nextLabelUse}</Link>
+      <Link href={`/${linkBase}/${nextPage}`}>
+        <a>{nextLabelUse}</a>
+      </Link>
     </li>
   ) : (
     <></>

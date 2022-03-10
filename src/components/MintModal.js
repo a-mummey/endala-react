@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { mintedTokenInfo, newTokenAddedSelector } from "../state";
-import "./MintModal.css";
+import styles from "./MintModal.module.scss";
 
 function MintModal() {
   const setTokenId = useSetRecoilState(newTokenAddedSelector);
@@ -21,7 +21,7 @@ function MintModal() {
   if (nftData && nftData.meta) {
     return (
       <main className="container">
-        <dialog className="minted-wrap" open>
+        <dialog className={styles.mintedWrap} open>
           <article>
             <header>
               <a
@@ -37,14 +37,16 @@ function MintModal() {
                 <h4>
                   {`Rank: ${nftData.rarity.rank} / ${nftData.total}`}
                   {" • "}
-                  <Link to={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
-                    View Details
+                  <Link href={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
+                    <a>View Details</a>
                   </Link>
                 </h4>
               </hgroup>
             </header>
-            <Link to={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
-              <img src={nftData.imageUrl} alt={nftData.meta.name} />
+            <Link href={`/nft/${nftData.tokenId}`} onClick={CloseModal}>
+              <a>
+                <img src={nftData.imageUrl} alt={nftData.meta.name} />
+              </a>
             </Link>
           </article>
         </dialog>

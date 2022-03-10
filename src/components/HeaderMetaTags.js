@@ -22,7 +22,7 @@ function HeaderMetaTags({ metaTags }) {
 
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={window.location.href} />
+      {/* <meta property="twitter:url" content={window.location.href} /> */}
       <meta property="twitter:title" content={tags.title} />
       <meta property="twitter:description" content={tags.description} />
       <meta property="twitter:image" content={tags.image} />
