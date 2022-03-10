@@ -5,7 +5,7 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from "recoil";
-import styles from "./MintButton.module.scss";
+import "./MintButton.css";
 import {
   keplrDerviedState,
   newTokenAddedSelector,
@@ -80,7 +80,7 @@ function MintButton() {
   };
   return (
     <button
-      className={styles.mintButton}
+      className="mintButton"
       aria-busy={buttonState.loading}
       disabled={buttonState.disabled}
       onClick={Mint}

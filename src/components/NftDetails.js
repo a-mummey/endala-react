@@ -4,7 +4,7 @@ import { nftDetailsSelector, sortedMintedTokensSelector } from "../state";
 import { imageUrl, thumbUrl } from "../utils/UrlHelper";
 import GalleryNav from "./GalleryNav";
 import NftAttributes from "./NftAttributes";
-import styles from "./NftDetails.module.scss";
+import "./NftDetails.scss";
 
 function NftDetails({ tokenId }) {
   const nftDetailsLoadable = useRecoilValueLoadable(
@@ -31,7 +31,7 @@ function NftDetails({ tokenId }) {
     const nftNotMintedMsg =
       isMinted === false ? <h3>This Endala hasn't been minted yet</h3> : <></>;
     return (
-      <article className={styles.nftDetails}>
+      <article className="nftDetails">
         <header>
           <hgroup>
             <h2>{nftDetails.meta.name}</h2>
@@ -53,7 +53,7 @@ function NftDetails({ tokenId }) {
             >
               <img src={thumbUrl(tokenId)} alt={nftDetails.meta.name}></img>
             </a>
-            <div className={styles.download}>
+            <div className="download">
               <a
                 href={imageUrl(tokenId)}
                 role="button"

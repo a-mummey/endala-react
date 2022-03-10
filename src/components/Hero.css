@@ -4,7 +4,8 @@
   background-size: cover;
   padding: 30px 0;
   margin-bottom: 20px;
-  h2 {
-    color: white;
-  }
+}
+
+.hero h2 {
+  color: white;
 }

@@ -1,5 +1,5 @@
 import config from "../config";
-import styles from "./Hero.module.scss";
+import "./Hero.css";
 import MintButton from "./MintButton";
 import ProgressBar from "./ProgressBar";
 import Countdown from "react-countdown";
@@ -29,7 +29,7 @@ function Hero() {
 
       // Render a countdown
       return (
-        <button className="secondary" disabled suppressHydrationWarning={true}>
+        <button className="secondary" disabled>
           {`${d} ${h} ${m} ${s}`}
         </button>
       );
@@ -38,10 +38,9 @@ function Hero() {
 
   return (
     <div
-      className={styles.hero}
+      className="hero"
       data-theme="dark"
       style={{ backgroundImage: heroStyle }}
-      suppressHydrationWarning={true}
     >
       <header className="container">
         <div className="row">

@@ -15,13 +15,13 @@ class NftHelper {
   }
 
   getAllRarities = async () => {
-    const r = await fetch(allRaritiesUrl());
+    const r = await window.fetch(allRaritiesUrl());
     return await r.json();
   };
 
   getNftData = async (tokenId) => {
-    const rarityP = await fetch(rarityUrl(tokenId));
-    const metaP = await fetch(metaUrl(tokenId));
+    const rarityP = await window.fetch(rarityUrl(tokenId));
+    const metaP = await window.fetch(metaUrl(tokenId));
 
     const rarity = await rarityP.json();
     const meta = await metaP.json();

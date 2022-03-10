@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 function Nav() {
   return (
@@ -11,19 +11,13 @@ function Nav() {
       </ul>
       <ul>
         <li>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <Link href="/gallery">
-            <a>Gallery</a>
-          </Link>
+          <Link to="/gallery">Gallery</Link>
         </li>
         <li>
-          <Link href="/about">
-            <a>About</a>
-          </Link>
+          <Link to="/about">About</Link>
         </li>
       </ul>
     </nav>

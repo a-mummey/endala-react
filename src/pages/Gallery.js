@@ -1,14 +1,13 @@
-import { useRouter } from "next/router";
+import { useParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
-import MiniThumbList from "../../components/MiniThumbList";
-import Pagination from "../../components/Pagination";
-import config from "../../config";
-import { sortedMintedTokensSelector } from "../../state";
+import MiniThumbList from "../components/MiniThumbList";
+import Pagination from "../components/Pagination";
+import config from "../config";
+import { sortedMintedTokensSelector } from "../state";
 
 function Gallery() {
-  const router = useRouter();
-  const { page } = router.query;
-  const pageParam = isNaN(parseInt(page)) ? 1 : parseInt(page);
+  const params = useParams();
+  const pageParam = isNaN(parseInt(params.page)) ? 1 : parseInt(params.page);
   const allMintedTokens = useRecoilValueLoadable(sortedMintedTokensSelector);
 
   const tokenIds = allMintedTokens.valueMaybe() || [];

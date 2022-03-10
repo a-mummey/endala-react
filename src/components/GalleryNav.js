@@ -1,4 +1,4 @@
-import "./GalleryNav.module.scss";
+import "./GalleryNav.scss";
 import Pagination from "./Pagination";
 
 function GalleryNav({ tokenId, allTokens }) {

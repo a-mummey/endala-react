@@ -1,20 +1,19 @@
-import { useRouter } from "next/router";
+import { useParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
-import HeaderMetaTags from "../../components/HeaderMetaTags";
-import NftDetails from "../../components/NftDetails";
-import { allMintedTokensState, myMintedTokensState } from "../../state";
-import { thumbUrl } from "../../utils/UrlHelper";
+import HeaderMetaTags from "../components/HeaderMetaTags";
+import NftDetails from "../components/NftDetails";
+import { allMintedTokensState, myMintedTokensState } from "../state";
+import { thumbUrl } from "../utils/UrlHelper";
 
 function NftInfo() {
-  const router = useRouter();
-  const { tokenId } = router.query;
+  let params = useParams();
   const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
   const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
   const myTokens = myMintedTokens.valueMaybe() || [];
 
   let currentTokenId;
-  if (tokenId) {
-    currentTokenId = tokenId;
+  if (params.tokenId) {
+    currentTokenId = params.tokenId;
   } else if (
     Array.isArray(allMintedTokens.valueMaybe()) &&
     allMintedTokens.valueMaybe()[0]
