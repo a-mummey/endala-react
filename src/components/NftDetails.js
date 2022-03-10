@@ -49,6 +49,7 @@ function NftDetails({ tokenId }) {
             <a
               href={imageUrl(tokenId)}
               target={"_blank"}
+              rel="noreferrer"
               title="View High Definition Image"
             >
               <img src={thumbUrl(tokenId)} alt={nftDetails.meta.name}></img>
@@ -58,6 +59,7 @@ function NftDetails({ tokenId }) {
                 href={imageUrl(tokenId)}
                 role="button"
                 target={"_blank"}
+                rel="noreferrer"
                 className="outline"
               >
                 Download in HD

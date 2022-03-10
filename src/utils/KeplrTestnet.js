@@ -65,6 +65,7 @@ const addTestnetToKeplr = async () => {
   let client;
   if (window.keplr) {
     try {
+      console.log("enabling");
       await window.keplr.enable(testnetConfig.chainId);
     } catch (e) {
       await window.keplr.experimentalSuggestChain(testnetConfig);

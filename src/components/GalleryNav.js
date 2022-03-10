@@ -2,7 +2,6 @@ import "./GalleryNav.scss";
 import Pagination from "./Pagination";
 
 function GalleryNav({ tokenId, allTokens }) {
-  const page = tokenId;
   return (
     <Pagination
       nextLabel={"Next >"}

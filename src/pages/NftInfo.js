@@ -9,7 +9,6 @@ function NftInfo() {
   let params = useParams();
   const allMintedTokens = useRecoilValueLoadable(allMintedTokensState);
   const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
-  const myTokens = myMintedTokens.valueMaybe() || [];
 
   let currentTokenId;
   if (params.tokenId) {

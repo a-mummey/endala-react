@@ -1,11 +1,13 @@
 import { thumbUrl } from "../utils/UrlHelper";
 import "./AboutComponent.scss";
+import { siteImageUrl } from "../utils/UrlHelper";
 
 function AboutComponent() {
+  const endalaThumb = 15;
   return (
     <div className="container about">
       <h1>About Endala</h1>
-      <img src={thumbUrl(15)}></img>
+      <img src={thumbUrl(endalaThumb)} alt={`Endala #${endalaThumb}`}></img>
       <p>
         Endala started is a passion project for me. I wouldn't normally consider
         myself an artist of any merit, but computer graphics sparked my
@@ -52,7 +54,7 @@ function AboutComponent() {
         whitespace in the middle of the grid.
       </p>
       <h2>How it's done</h2>
-      <p>TBD</p>
+      <img src={siteImageUrl("hexes.png")} alt="Hexagons"></img>
     </div>
   );
 }

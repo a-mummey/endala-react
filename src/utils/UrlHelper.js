@@ -13,4 +13,14 @@ const rarityUrl = (tokenId) =>
 const allRaritiesUrl = () =>
   `${config.fileUrlRarities}/rarities${config.rarityType}`;
 
-export { thumbUrl, miniUrl, metaUrl, rarityUrl, allRaritiesUrl, imageUrl };
+const siteImageUrl = (image) => `${config.siteImages}/${image}`;
+
+export {
+  thumbUrl,
+  miniUrl,
+  metaUrl,
+  rarityUrl,
+  allRaritiesUrl,
+  imageUrl,
+  siteImageUrl,
+};

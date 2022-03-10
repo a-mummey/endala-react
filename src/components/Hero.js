@@ -21,7 +21,7 @@ function Hero() {
       // Render a completed state
       return <MintButton></MintButton>;
     } else {
-      const plural = (i) => (i == 1 ? "" : "s");
+      const plural = (i) => (i === 1 ? "" : "s");
       const d = days ? `${days} day${plural(days)}` : "";
       const h = hours ? `${hours} hour${plural(hours)}` : "";
       const m = minutes ? `${minutes} minute${plural(minutes)}` : "";

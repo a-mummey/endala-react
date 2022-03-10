@@ -27,6 +27,7 @@ class KeplrClient {
       if (config.testnet) {
         const testnet = await addTestnetToKeplr();
       } else {
+        console.log("connecting");
         const chain = await window.keplr.enable(config.chainId);
       }
     };

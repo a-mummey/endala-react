@@ -16,7 +16,7 @@ function MiniThumb({ tokenId }) {
     <div className="miniThumb col-sm-6 col-md-4 col-lg-3 col-xl-2">
       <figure>
         <Link to={`/nft/${tokenId}`} className="miniThumb">
-          <img src={miniUrl(tokenId)}></img>
+          <img src={miniUrl(tokenId)} alt={`Endala #${tokenId}`}></img>
         </Link>
         <figcaption>
           <Link to={`/nft/${tokenId}`}>Endala #{tokenId}</Link>
