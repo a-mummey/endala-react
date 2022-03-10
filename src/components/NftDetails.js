@@ -46,7 +46,13 @@ function NftDetails({ tokenId }) {
         </header>
         <div className="row">
           <div className="col-sm-7">
-            <img src={thumbUrl(tokenId)}></img>
+            <a
+              href={imageUrl(tokenId)}
+              target={"_blank"}
+              title="View High Definition Image"
+            >
+              <img src={thumbUrl(tokenId)} alt={nftDetails.meta.name}></img>
+            </a>
             <div className="download">
               <a
                 href={imageUrl(tokenId)}
