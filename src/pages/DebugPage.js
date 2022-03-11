@@ -1,5 +1,13 @@
+import { useEffect } from "react";
+
 function DebugPage() {
-  throw new Error("testing errors rebuild");
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("yo");
+      throw new Error("testing errors rebuild");
+    }, 1000);
+  });
+
   return (
     <div className="container">
       <h2>Debugging</h2>
