@@ -1,5 +1,5 @@
 function DebugPage() {
-  throw new Error("testing errors");
+  throw new Error("testing errors rebuild");
   return (
     <div className="container">
       <h2>Debugging</h2>
