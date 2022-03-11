@@ -6,15 +6,21 @@ import AsyncNftHelper from "./utils/AsyncNftHelper";
 // This keeps the current client and its status
 const keplrClientState = atom({
   key: "keplrClientState",
-  default: { client: null, readOnlyClient: null, state: "loading" },
+  default: {
+    client: null,
+    offlineSigner: null,
+    readOnlyClient: null,
+    state: "loading",
+  },
   effects: [
     async ({ setSelf, onSet }) => {
       const initialize = async () => {
         try {
-          const { client, readOnlyClient } =
+          const { client, offlineSigner, readOnlyClient } =
             await AsyncKeplrClient.getInstance();
           setSelf({
             client,
+            offlineSigner,
             readOnlyClient,
             state: "loaded",
           });
@@ -215,8 +221,8 @@ const currentAccountSelector = selector({
   get: async ({ get }) => {
     const kState = get(keplrDerviedState);
     if (kState === "loaded") {
-      const { client } = await AsyncKeplrClient.getInstance();
-      const accounts = await client.offlineSigner.getAccounts();
+      const { offlineSigner } = await AsyncKeplrClient.getInstance();
+      const accounts = await offlineSigner.getAccounts();
       if (Array.isArray(accounts) && accounts[0]) {
         return accounts[0].address;
       } else {
@@ -231,9 +237,19 @@ const myMintedTokensState = atom({
   default: [],
 });
 
+const myMintedTokensLoadingState = atom({
+  key: "myMintedTokensLoadingState",
+  default: false,
+});
+
 const allMintedTokensState = atom({
   key: "allMintedTokensState",
   default: null,
+});
+
+const allMintedTokensLoadingState = atom({
+  key: "allMintedTokensLoadingState",
+  default: false,
 });
 
 export {
@@ -249,4 +265,6 @@ export {
   keplrErrorMsgViewed,
   mintErrorDetails,
   sortedMintedTokensSelector,
+  myMintedTokensLoadingState,
+  allMintedTokensLoadingState,
 };

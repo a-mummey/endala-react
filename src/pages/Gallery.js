@@ -1,16 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
 import MiniThumbList from "../components/MiniThumbList";
 import Pagination from "../components/Pagination";
 import config from "../config";
-import { sortedMintedTokensSelector } from "../state";
+import { sortedMintedTokensSelector, myMintedTokensState } from "../state";
 
 function Gallery() {
   const params = useParams();
   const pageParam = isNaN(parseInt(params.page)) ? 1 : parseInt(params.page);
   const allMintedTokens = useRecoilValueLoadable(sortedMintedTokensSelector);
+  const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
 
-  const tokenIds = allMintedTokens.valueMaybe() || [];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filterOwned = searchParams.get("filter_owned") === "true";
+  console.log(myMintedTokens.valueMaybe());
+  const getTokenIds = () => {
+    if (
+      allMintedTokens.valueMaybe() &&
+      myMintedTokens.valueMaybe() &&
+      filterOwned
+    ) {
+      return allMintedTokens
+        .valueMaybe()
+        .filter((t) => myMintedTokens.valueMaybe().includes(t));
+    } else {
+      return allMintedTokens.valueMaybe() || [];
+    }
+  };
+
+  const tokenIds = getTokenIds();
+
   const tokenIdsStart = (pageParam - 1) * config.numGallery;
   const pagedTokenIds = [...tokenIds].slice(
     tokenIdsStart,
@@ -24,9 +43,32 @@ function Gallery() {
     itemsPerPage: config.numGallery,
   };
 
+  const toggleMyEndalas = (e) => {
+    const { fitler_owned: remove, ...rest } = searchParams;
+    const newParams = e.target.checked
+      ? { ...searchParams, filter_owned: true }
+      : rest;
+    setSearchParams(newParams);
+  };
+
   return (
     <div className="container">
-      <h2>Minted Endalas</h2>
+      <hgroup>
+        <h2>Minted Endalas</h2>
+        <fieldset>
+          <label htmlFor="switch">
+            <input
+              type="checkbox"
+              id="switch"
+              name="switch"
+              role="switch"
+              onChange={toggleMyEndalas}
+              checked={filterOwned}
+            />
+            Filter My Endalas
+          </label>
+        </fieldset>
+      </hgroup>
       <div className="grid">
         <MiniThumbList tokenIds={pagedTokenIds}></MiniThumbList>
       </div>

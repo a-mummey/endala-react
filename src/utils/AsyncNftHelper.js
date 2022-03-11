@@ -4,16 +4,15 @@ import NftHelper from "./NftHelper";
 
 class AsyncNftHelper {
   static instance;
+  static semaphore;
   static async getInstance() {
-    if (AsyncNftHelper.instance) {
+    if (!AsyncNftHelper.instance && !AsyncNftHelper.semaphore) {
+      AsyncNftHelper.semaphore = true;
+      const keplrClient = await AsyncKeplrClient.getInstance();
+      AsyncNftHelper.instance = new NftHelper(keplrClient, config);
       return AsyncNftHelper.instance;
     } else {
-      AsyncNftHelper.instance = AsyncKeplrClient.getInstance().then(
-        (keplrClient) => {
-          return new NftHelper(keplrClient, config);
-        }
-      );
-      return AsyncKeplrClient.instance;
+      return AsyncNftHelper.instance;
     }
   }
 }

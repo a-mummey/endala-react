@@ -7,10 +7,11 @@ class NftHelper {
   signingClient;
   readOnlyClient;
   limit = 30;
-  constructor(client, config) {
-    this.offlineSigner = client.offlineSigner;
-    this.signingClient = client.signingClient;
-    this.readOnlyClient = client.readOnlyClient;
+  constructor({ client, offlineSigner, readOnlyClient }, config) {
+    console.log(client);
+    this.offlineSigner = offlineSigner;
+    this.signingClient = client;
+    this.readOnlyClient = readOnlyClient;
     this.config = config;
   }
 
@@ -19,6 +20,7 @@ class NftHelper {
     return await r.json();
   };
 
+  // Load files from AWS
   getNftData = async (tokenId) => {
     const rarityP = await window.fetch(rarityUrl(tokenId));
     const metaP = await window.fetch(metaUrl(tokenId));
@@ -33,6 +35,18 @@ class NftHelper {
       meta,
       total: this.config.totalNumMints,
     };
+  };
+
+  // Get chain info
+  getTokenInfo = async (tokenId) => {
+    const tokenQuery = await this.readOnlyClient.queryContractSmart(
+      this.config.sg721,
+      {
+        all_nft_info: { token_id: tokenId },
+      }
+    );
+    console.log(tokenQuery);
+    return tokenQuery;
   };
 
   // https://github.com/public-awesome/stargaze-contracts/blob/main/contracts/sg721/schema/query_msg.json
@@ -59,11 +73,12 @@ class NftHelper {
     if (startAfter) {
       q.tokens.start_after = startAfter;
     }
-    // console.log("getMyMintedTokens", q);
+
     const { tokens } = await this.signingClient.queryContractSmart(
       this.config.sg721,
       q
     );
+
     return tokens;
   };
 
