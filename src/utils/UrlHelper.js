@@ -14,6 +14,10 @@ const allRaritiesUrl = () =>
   `${config.fileUrlRarities}/rarities${config.rarityType}`;
 
 const siteImageUrl = (image) => `${config.siteImages}/${image}`;
+const stargazeMedia = (tokenId) =>
+  `${config.stargazeZone}/media/${config.sg721}/${tokenId}`;
+const stargazeProfile = (accountId) =>
+  `${config.stargazeZone}/profile/${accountId}`;
 
 export {
   thumbUrl,
@@ -23,4 +27,6 @@ export {
   allRaritiesUrl,
   imageUrl,
   siteImageUrl,
+  stargazeMedia,
+  stargazeProfile,
 };

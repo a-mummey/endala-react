@@ -5,6 +5,8 @@ import { imageUrl, thumbUrl } from "../utils/UrlHelper";
 import GalleryNav from "./GalleryNav";
 import NftAttributes from "./NftAttributes";
 import "./NftDetails.scss";
+import { stargazeMedia } from "../utils/UrlHelper";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 function NftDetails({ tokenId }) {
   const nftDetailsLoadable = useRecoilValueLoadable(
@@ -39,10 +41,20 @@ function NftDetails({ tokenId }) {
               Rank: {nftDetails.rarity.rank} / {config.totalNumMints}
             </h3>
           </hgroup>
-          <GalleryNav
-            tokenId={tokenId}
-            allTokens={allMintedTokens.valueMaybe()}
-          ></GalleryNav>
+          <div className="gallery-nav-wrapper">
+            <a
+              href={stargazeMedia(tokenId)}
+              rel="noreferrer"
+              target={"_blank"}
+              title={`View Endala #${tokenId} on Stargaze`}
+            >
+              View On Stargaze <FaExternalLinkAlt />
+            </a>
+            <GalleryNav
+              tokenId={tokenId}
+              allTokens={allMintedTokens.valueMaybe()}
+            ></GalleryNav>
+          </div>
         </header>
         <div className="row">
           <div className="col-sm-7">
@@ -68,6 +80,8 @@ function NftDetails({ tokenId }) {
           </div>
           <div className="col-sm-5">
             <NftAttributes nftRarity={nftDetails.rarity}></NftAttributes>
+            <div className={"stargaze-link"}></div>
+
             {nftNotMintedMsg}
           </div>
         </div>

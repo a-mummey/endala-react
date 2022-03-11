@@ -3,8 +3,14 @@ import { useRecoilValueLoadable } from "recoil";
 import MiniThumbList from "../components/MiniThumbList";
 import Pagination from "../components/Pagination";
 import config from "../config";
-import { myMintedTokensState, sortedMintedTokensSelector } from "../state";
+import {
+  myMintedTokensState,
+  sortedMintedTokensSelector,
+  currentAccountSelector,
+} from "../state";
 import "./Gallery.scss";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { stargazeProfile } from "../utils/UrlHelper";
 
 function Gallery() {
   const params = useParams();
@@ -13,6 +19,9 @@ function Gallery() {
     useRecoilValueLoadable(sortedMintedTokensSelector).valueMaybe() || [];
   const myMintedTokens =
     useRecoilValueLoadable(myMintedTokensState).valueMaybe() || [];
+  const currentAccount = useRecoilValueLoadable(
+    currentAccountSelector
+  ).valueMaybe();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const filterOwned = searchParams.get("filter_owned") === "true";
@@ -45,6 +54,34 @@ function Gallery() {
     ? allMintedTokens.length
     : "?";
 
+  const galleryFilters = currentAccount ? (
+    <div className="gallery-filters">
+      <a
+        href={stargazeProfile(currentAccount)}
+        rel="noreferrer"
+        target={"_blank"}
+        title="View My Endalas on Stargaze"
+      >
+        My Endalas on Stargaze <FaExternalLinkAlt />
+      </a>
+      <fieldset>
+        <label htmlFor="switch">
+          <input
+            type="checkbox"
+            id="switch"
+            name="switch"
+            role="switch"
+            onChange={toggleMyEndalas}
+            checked={filterOwned}
+          />
+          Filter My Endalas
+        </label>
+      </fieldset>
+    </div>
+  ) : (
+    <></>
+  );
+
   return (
     <div className="container ">
       <div className="gallery-head">
@@ -52,20 +89,7 @@ function Gallery() {
           <h2>Endala Gallery</h2>
           <h3>{`* Showing the ${mintedCount} already minted Endalas`}</h3>
         </hgroup>
-
-        <fieldset>
-          <label htmlFor="switch">
-            <input
-              type="checkbox"
-              id="switch"
-              name="switch"
-              role="switch"
-              onChange={toggleMyEndalas}
-              checked={filterOwned}
-            />
-            Filter My Endalas
-          </label>
-        </fieldset>
+        {galleryFilters}
       </div>
       <div className="grid">
         <MiniThumbList tokenIds={pagedTokenIds}></MiniThumbList>

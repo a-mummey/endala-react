@@ -20,6 +20,7 @@ module.exports = {
     fileUrlMetadata: "https://files.endala.xyz/testnet/metadata",
     fileUrlRarities: "https://files.endala.xyz/testnet/rarities",
     siteImages: "https://files.endala.xyz/site-images",
+    stargazeZone: "https://big-bang.publicawesome.dev",
   },
   // Production Values
   production: {
@@ -42,6 +43,7 @@ module.exports = {
     fileUrlMetadata: "https://files.endala.xyz/nft/metadata",
     fileUrlRarities: "https://files.endala.xyz/nft/rarities",
     siteImages: "https://files.endala.xyz/site-images",
+    stargazeZone: "https://big-bang.publicawesome.dev",
   },
   global: {
     testnet: true, // Set to false on production

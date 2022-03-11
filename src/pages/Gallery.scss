@@ -1,8 +1,12 @@
 .gallery-head {
   display: flex;
   justify-content: space-between;
-  fieldset {
-    display: flex;
-    align-items: center;
+  .gallery-filters {
+    text-align: right;
+    fieldset {
+      margin: 20px 0 0 0;
+    }
+    // display: flex;
+    // align-items: center;
   }
 }
