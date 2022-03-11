@@ -24,8 +24,8 @@ module.exports = {
   },
   // Production Values
   production: {
-    rpc: "https://rpc-stargaze.keplr.app",
-    rest: "https://lcd-stargaze.keplr.app",
+    rpcEndpoint: "https://rpc.stargaze-apis.com",
+    restEndpoint: "https://lcd-stargaze.keplr.app",
     chainId: "stargaze-1",
     // Custom values here
     sg721: "stars1senp0tx0ew8k5ncwtqy2mu9duawzx6007ljh49ywlfd6sdgykumqwmn5mm", // UPDATE ME to your production contract
