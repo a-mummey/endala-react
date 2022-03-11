@@ -19,7 +19,15 @@ function Hero() {
   }) => {
     if (completed) {
       // Render a completed state
-      return <MintButton></MintButton>;
+      return (
+        <a
+          href="https://app.stargaze.zone/launchpad/stars1yrnh5d60cp5tctt8ngv626u7g3ejkmmecc92etjt2wue5ff9wxsq4fm7h0"
+          role={"button"}
+          className="mintButton"
+        >
+          Mint on Stargaze
+        </a>
+      );
     } else {
       const plural = (i) => (i === 1 ? "" : "s");
       const d = days ? `${days} day${plural(days)}` : "";
