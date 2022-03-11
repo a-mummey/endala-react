@@ -67,10 +67,6 @@ function NftDetails({ tokenId }) {
             </div>
           </div>
           <div className="col-sm-5">
-            <div className="row justify-content-between">
-              <div className="col-sm-5"></div>
-              <div className="col-sm-5"></div>
-            </div>
             <NftAttributes nftRarity={nftDetails.rarity}></NftAttributes>
             {nftNotMintedMsg}
           </div>

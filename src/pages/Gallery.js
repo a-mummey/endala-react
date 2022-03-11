@@ -4,6 +4,7 @@ import MiniThumbList from "../components/MiniThumbList";
 import Pagination from "../components/Pagination";
 import config from "../config";
 import { myMintedTokensState, sortedMintedTokensSelector } from "../state";
+import "./Gallery.scss";
 
 function Gallery() {
   const params = useParams();
@@ -38,11 +39,20 @@ function Gallery() {
       : rest;
     setSearchParams(newParams);
   };
+  const mintedCount = useRecoilValueLoadable(
+    sortedMintedTokensSelector
+  ).valueMaybe()
+    ? allMintedTokens.length
+    : "?";
 
   return (
-    <div className="container">
-      <hgroup>
-        <h2>Minted Endalas</h2>
+    <div className="container ">
+      <div className="gallery-head">
+        <hgroup>
+          <h2>Endala Gallery</h2>
+          <h3>{`* Showing the ${mintedCount} already minted Endalas`}</h3>
+        </hgroup>
+
         <fieldset>
           <label htmlFor="switch">
             <input
@@ -56,7 +66,7 @@ function Gallery() {
             Filter My Endalas
           </label>
         </fieldset>
-      </hgroup>
+      </div>
       <div className="grid">
         <MiniThumbList tokenIds={pagedTokenIds}></MiniThumbList>
       </div>
