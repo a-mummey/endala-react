@@ -43,7 +43,7 @@ module.exports = {
     fileUrlMetadata: "https://files.endala.xyz/nft/metadata",
     fileUrlRarities: "https://files.endala.xyz/nft/rarities",
     siteImages: "https://files.endala.xyz/site-images",
-    stargazeZone: "https://big-bang.publicawesome.dev",
+    stargazeZone: "https://app.stargaze.zone",
   },
   global: {
     testnet: false, // Set to false on Production
