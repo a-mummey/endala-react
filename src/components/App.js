@@ -8,6 +8,7 @@ import NftInfo from "../pages/NftInfo";
 import Gallery from "../pages/Gallery";
 import StateSubscriber from "./StateSubscriber";
 import Footer from "./Footer";
+import DebugPage from "../pages/DebugPage";
 import KeplrErrorModal from "../components/KeplrErrorModal";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Nav></Nav>
         <Routes>
+          <Route path="/debug" element={<DebugPage />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/nft/:tokenId" element={<NftInfo />}></Route>
