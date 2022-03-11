@@ -19,11 +19,13 @@ const KeplrClient = async (config) => {
     } else {
       console.log("connecting");
       const chain = await window.keplr.enable(config.chainId);
+      console.log(chain);
     }
   };
 
   await checkChainOrTestnet();
   const readOnlyClient = await CosmWasmClient.connect(config.rpcEndpoint);
+  console.log(readOnlyClient);
   if (window.getOfflineSignerAuto) {
     // Setup signer
     const offlineSigner = await window.getOfflineSignerAuto(config.chainId);
