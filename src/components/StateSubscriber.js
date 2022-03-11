@@ -50,7 +50,6 @@ function StateSubscriber() {
   useEffect(() => {
     const loadAllMyTokens = async () => {
       const helper = await AsyncNftHelper.getInstance();
-
       setMyTokensLoading(true);
       const accountId = currentAccount.valueOrThrow();
 
@@ -67,6 +66,7 @@ function StateSubscriber() {
       } while (myTokens.length >= helper.limit);
       // setMyTokensLoading(false);
     };
+
     if (!areMyTokensLoading && currentAccount.valueMaybe()) {
       loadAllMyTokens();
       window.addEventListener("keplr_keystorechange", resetKeplr);
@@ -76,13 +76,13 @@ function StateSubscriber() {
       const allTokens = await helper.getAllMintedTokens(startAfter);
       setAllTokens(allTokens);
       if (allTokens.length >= helper.limit) {
-        return;
-      } else {
         loadAllTokens(helper, allTokens[allTokens.length - 1]);
+      } else {
+        return;
       }
     };
 
-    const doTokenLoading = async () => {
+    const doAllTokenLoading = async () => {
       const helper = await AsyncNftHelper.getInstance();
       if (helper) {
         setAllTokensLoading(true);
@@ -90,7 +90,7 @@ function StateSubscriber() {
       }
     };
     if (!areAllTokensLoading) {
-      doTokenLoading();
+      doAllTokenLoading();
     }
   });
 

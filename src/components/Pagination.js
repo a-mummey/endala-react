@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, createSearchParams } from "react-router-dom";
 import "./Pagination.css";
 
 function Pagination({
@@ -21,6 +21,7 @@ function Pagination({
   let nextPage;
   let show;
 
+  const [searchParams, setSearchParams] = useSearchParams();
   if (Array.isArray(items)) {
     const itemIndex = items.indexOf(currentItem);
     currentPage = itemIndex + 1;
@@ -44,16 +45,22 @@ function Pagination({
   const prevLabelUse = prevLabel || "< Previous";
   const spacerUse = spacer || " • ";
 
+  let search = "";
+  console.log(searchParams.toString());
+  if (searchParams.toString()) {
+    search = `?${createSearchParams(searchParams)}`;
+  }
+
   const previous = !isFirstPage ? (
     <li>
-      <Link to={`/${linkBase}/${prevPage}`}>{prevLabelUse}</Link>
+      <Link to={`/${linkBase}/${prevPage}${search}`}>{prevLabelUse}</Link>
     </li>
   ) : (
     <></>
   );
   const next = !isLastPage ? (
     <li>
-      <Link to={`/${linkBase}/${nextPage}`}>{nextLabelUse}</Link>
+      <Link to={`/${linkBase}/${nextPage}${search}`}>{nextLabelUse}</Link>
     </li>
   ) : (
     <></>

@@ -3,32 +3,20 @@ import { useRecoilValueLoadable } from "recoil";
 import MiniThumbList from "../components/MiniThumbList";
 import Pagination from "../components/Pagination";
 import config from "../config";
-import { sortedMintedTokensSelector, myMintedTokensState } from "../state";
+import { myMintedTokensState, sortedMintedTokensSelector } from "../state";
 
 function Gallery() {
   const params = useParams();
   const pageParam = isNaN(parseInt(params.page)) ? 1 : parseInt(params.page);
-  const allMintedTokens = useRecoilValueLoadable(sortedMintedTokensSelector);
-  const myMintedTokens = useRecoilValueLoadable(myMintedTokensState);
+  const allMintedTokens =
+    useRecoilValueLoadable(sortedMintedTokensSelector).valueMaybe() || [];
+  const myMintedTokens =
+    useRecoilValueLoadable(myMintedTokensState).valueMaybe() || [];
 
   const [searchParams, setSearchParams] = useSearchParams();
   const filterOwned = searchParams.get("filter_owned") === "true";
-  console.log(myMintedTokens.valueMaybe());
-  const getTokenIds = () => {
-    if (
-      allMintedTokens.valueMaybe() &&
-      myMintedTokens.valueMaybe() &&
-      filterOwned
-    ) {
-      return allMintedTokens
-        .valueMaybe()
-        .filter((t) => myMintedTokens.valueMaybe().includes(t));
-    } else {
-      return allMintedTokens.valueMaybe() || [];
-    }
-  };
 
-  const tokenIds = getTokenIds();
+  const tokenIds = filterOwned ? myMintedTokens : allMintedTokens;
 
   const tokenIdsStart = (pageParam - 1) * config.numGallery;
   const pagedTokenIds = [...tokenIds].slice(
