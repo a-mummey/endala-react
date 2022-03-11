@@ -49,6 +49,7 @@ function Hero() {
               <h1>Endala</h1>
               <h2>A Generative NFT Project on Stargaze</h2>
             </hgroup>
+            <small>Mint Cost: 250 STARS</small>
             <p>
               <Countdown
                 renderer={renderer}
