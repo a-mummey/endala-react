@@ -53,8 +53,8 @@ function AboutComponent() {
         unlocked the ability to frame the image with whitespace or allow
         whitespace in the middle of the grid.
       </p>
-      <h2>How it's done</h2>
-      <img src={siteImageUrl("hexes.png")} alt="Hexagons"></img>
+      {/* <h2>How it's done</h2>
+      <img src={siteImageUrl("hexes.png")} alt="Hexagons"></img> */}
     </div>
   );
 }
