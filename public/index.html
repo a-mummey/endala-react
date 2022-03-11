@@ -3,6 +3,11 @@
   <head>
     <!-- Google Tag Manager -->
     <script>
+      var host = window.location.hostname;
+      if (host === "localhost") {
+        // your google analytic code here
+        window["ga-disable-G-3BD49WMH0J"] = true;
+      }
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
