@@ -1,14 +1,21 @@
 import { useRecoilValueLoadable } from "recoil";
 import config from "../config";
-import { nftDetailsSelector, sortedMintedTokensSelector } from "../state";
+import {
+  nftDetailsSelector,
+  sortedMintedTokensSelector,
+  tokenInfoSelector,
+} from "../state";
 import { imageUrl, thumbUrl } from "../utils/UrlHelper";
 import GalleryNav from "./GalleryNav";
 import NftAttributes from "./NftAttributes";
 import "./NftDetails.scss";
-import { stargazeMedia } from "../utils/UrlHelper";
+import { stargazeMedia, stargazeProfile } from "../utils/UrlHelper";
 import { FaExternalLinkAlt, FaTrophy } from "react-icons/fa";
 
 function NftDetails({ tokenId }) {
+  const tokenInfo =
+    useRecoilValueLoadable(tokenInfoSelector(tokenId)).valueMaybe() || {};
+
   const nftDetailsLoadable = useRecoilValueLoadable(
     nftDetailsSelector(tokenId)
   );
@@ -35,6 +42,25 @@ function NftDetails({ tokenId }) {
 
     const trophy =
       nftDetails.rarity.rank <= 10 ? <FaTrophy title="Top 10 Endala" /> : <></>;
+
+    const ownedBy = tokenInfo.access ? (
+      <p className="owner">
+        <small>
+          Owner:{" "}
+          <a
+            href={stargazeProfile(tokenId)}
+            rel="noreferrer"
+            target={"_blank"}
+            title={`View account on Stargaze`}
+            className={"secondary"}
+          >
+            {tokenInfo.access.owner}
+          </a>
+        </small>
+      </p>
+    ) : (
+      <></>
+    );
 
     return (
       <article className="nftDetails">
@@ -84,11 +110,10 @@ function NftDetails({ tokenId }) {
           </div>
           <div className="col-sm-5">
             <NftAttributes nftRarity={nftDetails.rarity}></NftAttributes>
-            <div className={"stargaze-link"}></div>
-
             {nftNotMintedMsg}
           </div>
         </div>
+        {ownedBy}
       </article>
     );
   } else {

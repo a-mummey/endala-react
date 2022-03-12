@@ -232,6 +232,17 @@ const currentAccountSelector = selector({
   },
 });
 
+const tokenInfoSelector = selectorFamily({
+  key: "tokenInfoSelector",
+  get: (tokenId) => async () => {
+    // console.log("selecting token", tokenId);
+    const helper = await AsyncNftHelper.getInstance();
+    const response = await helper.getTokenInfo(tokenId);
+    // console.log("response", response);
+    return response;
+  },
+});
+
 const myMintedTokensState = atom({
   key: "myMintedTokensState",
   default: [],
@@ -267,4 +278,5 @@ export {
   sortedMintedTokensSelector,
   myMintedTokensLoadingState,
   allMintedTokensLoadingState,
+  tokenInfoSelector,
 };
