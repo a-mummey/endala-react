@@ -1,6 +1,7 @@
 import { calculateFee, coins, GasPrice } from "@cosmjs/stargate";
 import log from "loglevel";
 import { allRaritiesUrl, metaUrl, rarityUrl, thumbUrl } from "./UrlHelper";
+import KeplrClient from "./KeplrClient";
 
 class NftHelper {
   config;
@@ -111,7 +112,9 @@ class NftHelper {
     const msg = { mint: {} };
     log.debug(msg);
 
-    const result = await this.signingClient.execute(
+    // This is pure hack, not sure why my other client isn't working.
+    const { client } = await KeplrClient(this.config);
+    const result = await client.execute(
       accounts[0].address,
       this.config.minter,
       msg,
