@@ -6,7 +6,7 @@ import GalleryNav from "./GalleryNav";
 import NftAttributes from "./NftAttributes";
 import "./NftDetails.scss";
 import { stargazeMedia } from "../utils/UrlHelper";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaTrophy } from "react-icons/fa";
 
 function NftDetails({ tokenId }) {
   const nftDetailsLoadable = useRecoilValueLoadable(
@@ -32,13 +32,17 @@ function NftDetails({ tokenId }) {
 
     const nftNotMintedMsg =
       isMinted === false ? <h3>This Endala hasn't been minted yet</h3> : <></>;
+
+    const trophy =
+      nftDetails.rarity.rank <= 10 ? <FaTrophy title="Top 10 Endala" /> : <></>;
+
     return (
       <article className="nftDetails">
         <header>
           <hgroup>
             <h2>{nftDetails.meta.name}</h2>
             <h3>
-              Rank: {nftDetails.rarity.rank} / {config.totalNumMints}
+              Rarity: {nftDetails.rarity.rank} / {config.totalNumMints} {trophy}
             </h3>
           </hgroup>
           <div className="gallery-nav-wrapper">

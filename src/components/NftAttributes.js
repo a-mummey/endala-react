@@ -1,3 +1,4 @@
+import { FaInfoCircle } from "react-icons/fa";
 function NftAttributes({ nftRarity }) {
   //   console.log(nftRarity);
   const rows =
@@ -20,29 +21,34 @@ function NftAttributes({ nftRarity }) {
   const totalScore =
     nftRarity && nftRarity.score ? parseFloat(nftRarity.score).toFixed(2) : "?";
   return (
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Attribute</th>
-          <th scope="col">Value</th>
-          <th scope="col">%&nbsp;With</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-      <tfoot>
-        <tr>
-          <td scope="col" colSpan={3}>
-            <strong>Total Score</strong>
-          </td>
-          <td scope="col">
-            <strong>
-              <ins>{totalScore}</ins>
-            </strong>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Attribute</th>
+            <th scope="col">Value</th>
+            <th scope="col">%&nbsp;With</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+        <tfoot>
+          <tr>
+            <td scope="col" colSpan={3}>
+              <strong>Total Score</strong>
+            </td>
+            <td scope="col">
+              <strong>
+                <ins>{totalScore}</ins>
+              </strong>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <i>
+        <FaInfoCircle /> The higher the score, the more rare the Endala is.
+      </i>
+    </>
   );
 }
 
