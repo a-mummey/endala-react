@@ -16,7 +16,6 @@ function NftDetails({ tokenId }) {
   const tokenInfo =
     useRecoilValueLoadable(tokenInfoSelector(tokenId)).valueMaybe() || {};
 
-  console.log(tokenInfo);
   const nftDetailsLoadable = useRecoilValueLoadable(
     nftDetailsSelector(tokenId)
   );
@@ -33,6 +32,8 @@ function NftDetails({ tokenId }) {
     if (Array.isArray(allMintedTokens.valueMaybe())) {
       isMinted = allMintedTokens.valueMaybe().includes(tokenId);
     }
+
+    // console.log(isMinted, nftDetailsLoadable);
     const nftDetails =
       isMinted === true && nftDetailsLoadable.valueMaybe()
         ? nftDetailsLoadable.valueMaybe()

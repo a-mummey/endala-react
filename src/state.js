@@ -1,7 +1,8 @@
 import log from "loglevel";
 import { atom, DefaultValue, selector, selectorFamily } from "recoil";
+import config from "./config";
 import AsyncKeplrClient from "./utils/AsyncKeplrClient";
-import AsyncNftHelper from "./utils/AsyncNftHelper";
+import NftHelper from "./utils/NftHelper";
 
 // This keeps the current client and its status
 const keplrClientState = atom({
@@ -119,13 +120,16 @@ const mintedCountState = atom({
   key: "mintedCountState",
   default: "?",
   effects: [
-    async ({ setSelf, onSet }) => {
+    async ({ setSelf, onSet, get }) => {
       const initialize = async () => {
         try {
-          const helper = await AsyncNftHelper.getInstance();
-          helper.getProgress().then((progress) => {
-            setSelf(progress.minted);
-          });
+          const { readOnlyClient } = get(keplrClientState);
+          if (readOnlyClient) {
+            const helper = new NftHelper({ readOnlyClient }, config);
+            helper.getProgress().then((progress) => {
+              setSelf(progress.minted);
+            });
+          }
         } catch (e) {
           setSelf("?");
         }
@@ -145,10 +149,13 @@ const raritiesState = atom({
   key: "raritiesState",
   default: [],
   effects: [
-    async ({ setSelf }) => {
-      const helper = await AsyncNftHelper.getInstance();
-      const rarities = await helper.getAllRarities();
-      setSelf(rarities);
+    async ({ setSelf, get }) => {
+      const { readOnlyClient } = get(keplrClientState);
+      if (readOnlyClient) {
+        const helper = new NftHelper({ readOnlyClient }, config);
+        const rarities = await helper.getAllRarities();
+        setSelf(rarities);
+      }
     },
   ],
 });
@@ -156,13 +163,18 @@ const raritiesState = atom({
 // Get details of a single NFT
 const nftDetailsSelector = selectorFamily({
   key: "singleRaritySelector",
-  get: (tokenId) => async () => {
-    if (tokenId) {
-      const helper = await AsyncNftHelper.getInstance();
-      const nftData = await helper.getNftData(tokenId);
-      return nftData;
-    }
-  },
+  get:
+    (tokenId) =>
+    async ({ get }) => {
+      if (tokenId) {
+        const { readOnlyClient } = get(keplrClientState);
+        if (readOnlyClient) {
+          const helper = new NftHelper({ readOnlyClient }, config);
+          const nftData = await helper.getNftData(tokenId);
+          return nftData;
+        }
+      }
+    },
 });
 
 // Last minted token id
@@ -203,14 +215,17 @@ const sortedMintedTokensSelector = selector({
 const mintedTokenInfo = selector({
   key: "mintedTokenInfo",
   get: async ({ get }) => {
-    const helper = await AsyncNftHelper.getInstance();
-    const latestTokenId = get(lastMintedTokenIdState);
+    const { readOnlyClient } = get(keplrClientState);
+    if (readOnlyClient) {
+      const helper = new NftHelper({ readOnlyClient }, config);
+      const latestTokenId = get(lastMintedTokenIdState);
 
-    if (latestTokenId) {
-      const nftData = await helper.getNftData(latestTokenId);
-      return nftData;
-    } else {
-      return null;
+      if (latestTokenId) {
+        const nftData = await helper.getNftData(latestTokenId);
+        return nftData;
+      } else {
+        return null;
+      }
     }
   },
 });
@@ -234,13 +249,22 @@ const currentAccountSelector = selector({
 
 const tokenInfoSelector = selectorFamily({
   key: "tokenInfoSelector",
-  get: (tokenId) => async () => {
-    // console.log("selecting token", tokenId);
-    const helper = await AsyncNftHelper.getInstance();
-    const response = await helper.getTokenInfo(tokenId);
-    // console.log("response", response);
-    return response;
-  },
+  get:
+    (tokenId) =>
+    async ({ get }) => {
+      const { readOnlyClient } = get(keplrClientState);
+      console.log("readOnlyClient", readOnlyClient);
+      if (readOnlyClient) {
+        const helper = new NftHelper({ readOnlyClient }, config);
+        try {
+          const response = await helper.getTokenInfo(tokenId);
+          console.log("response", response);
+          return response;
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
 });
 
 const myMintedTokensState = atom({

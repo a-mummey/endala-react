@@ -46,7 +46,6 @@ function Pagination({
   const spacerUse = spacer || " • ";
 
   let search = "";
-  console.log(searchParams.toString());
   if (searchParams.toString()) {
     search = `?${createSearchParams(searchParams)}`;
   }

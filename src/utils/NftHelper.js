@@ -9,7 +9,7 @@ class NftHelper {
   readOnlyClient;
   limit = 30;
   constructor({ client, offlineSigner, readOnlyClient }, config) {
-    console.log(client);
+    // console.log(client);
     this.offlineSigner = offlineSigner;
     this.signingClient = client;
     this.readOnlyClient = readOnlyClient;
