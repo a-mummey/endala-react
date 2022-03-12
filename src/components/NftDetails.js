@@ -16,6 +16,7 @@ function NftDetails({ tokenId }) {
   const tokenInfo =
     useRecoilValueLoadable(tokenInfoSelector(tokenId)).valueMaybe() || {};
 
+  console.log(tokenInfo);
   const nftDetailsLoadable = useRecoilValueLoadable(
     nftDetailsSelector(tokenId)
   );
@@ -45,18 +46,7 @@ function NftDetails({ tokenId }) {
 
     const ownedBy = tokenInfo.access ? (
       <p className="owner">
-        <small>
-          Owner:{" "}
-          <a
-            href={stargazeProfile(tokenId)}
-            rel="noreferrer"
-            target={"_blank"}
-            title={`View account on Stargaze`}
-            className={"secondary"}
-          >
-            {tokenInfo.access.owner}
-          </a>
-        </small>
+        <small>Owner: {tokenInfo.access.owner}</small>
       </p>
     ) : (
       <></>
