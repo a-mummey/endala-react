@@ -5,6 +5,8 @@ import {
   myMintedTokensState,
   myMintedTokensLoadingState,
   keplrDerviedState,
+  mintedCountState,
+  keplrClientState,
 } from "../state";
 import {
   useRecoilValueLoadable,
@@ -13,6 +15,8 @@ import {
 } from "recoil";
 import { useEffect } from "react";
 import AsyncNftHelper from "../utils/AsyncNftHelper";
+import NftHelper from "../utils/NftHelper";
+import config from "../config";
 
 function StateSubscriber() {
   // I had trouble doing this without a separate compontent
@@ -20,6 +24,7 @@ function StateSubscriber() {
   const currentAccount = useRecoilValueLoadable(currentAccountSelector);
   const areMyTokensLoading = useRecoilValue(myMintedTokensLoadingState);
   const areAllTokensLoading = useRecoilValue(allMintedTokensLoadingState);
+  const client = useRecoilValueLoadable(keplrClientState).valueMaybe();
 
   const setAllTokens = useRecoilCallback(({ set }) => (tokenIds) => {
     if (tokenIds.length) {
@@ -36,6 +41,10 @@ function StateSubscriber() {
       ]);
     }
   });
+  const setNumMinted = useRecoilCallback(({ set }) => (numMinted) => {
+    set(mintedCountState, numMinted);
+  });
+
   const resetKeplr = useRecoilCallback(({ reset }) => (tokenIds) => {
     reset(keplrDerviedState);
   });
@@ -48,8 +57,9 @@ function StateSubscriber() {
   });
   // Once it is available, we'll pagniate through some of the APIs, updating loaded state as it comes
   useEffect(() => {
+    const helper = client.readOnlyClient ? new NftHelper(client, config) : {};
+
     const loadAllMyTokens = async () => {
-      const helper = await AsyncNftHelper.getInstance();
       setMyTokensLoading(true);
       const accountId = currentAccount.valueOrThrow();
 
@@ -67,29 +77,38 @@ function StateSubscriber() {
       // setMyTokensLoading(false);
     };
 
-    if (!areMyTokensLoading && currentAccount.valueMaybe()) {
+    if (
+      !areMyTokensLoading &&
+      currentAccount.valueMaybe() &&
+      helper.signingClient
+    ) {
       loadAllMyTokens();
       window.addEventListener("keplr_keystorechange", resetKeplr);
     }
 
-    const loadAllTokens = async (helper, startAfter) => {
+    const loadAllTokens = async (startAfter) => {
       const allTokens = await helper.getAllMintedTokens(startAfter);
       setAllTokens(allTokens);
       if (allTokens.length >= helper.limit) {
-        loadAllTokens(helper, allTokens[allTokens.length - 1]);
+        loadAllTokens(allTokens[allTokens.length - 1]);
       } else {
         return;
       }
     };
 
-    const doAllTokenLoading = async () => {
-      const helper = await AsyncNftHelper.getInstance();
-      if (helper) {
-        setAllTokensLoading(true);
-        loadAllTokens(helper);
-      }
+    const setMintedCount = async () => {
+      helper.getProgress().then((progress) => {
+        setNumMinted(progress.minted);
+      });
     };
-    if (!areAllTokensLoading) {
+
+    const doAllTokenLoading = async () => {
+      setAllTokensLoading(true);
+      loadAllTokens();
+      setMintedCount();
+    };
+
+    if (!areAllTokensLoading && helper.readOnlyClient) {
       doAllTokenLoading();
     }
   });

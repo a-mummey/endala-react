@@ -119,29 +119,6 @@ const mintErrorDetails = atom({
 const mintedCountState = atom({
   key: "mintedCountState",
   default: "?",
-  effects: [
-    async ({ setSelf, onSet, get }) => {
-      const initialize = async () => {
-        try {
-          const { readOnlyClient } = get(keplrClientState);
-          if (readOnlyClient) {
-            const helper = new NftHelper({ readOnlyClient }, config);
-            helper.getProgress().then((progress) => {
-              setSelf(progress.minted);
-            });
-          }
-        } catch (e) {
-          setSelf("?");
-        }
-      };
-      onSet(async (n, o, isReset) => {
-        if (isReset) {
-          await initialize();
-        }
-      });
-      await initialize();
-    },
-  ],
 });
 
 // Loads the list of rarities
@@ -288,6 +265,7 @@ const allMintedTokensLoadingState = atom({
 });
 
 export {
+  keplrClientState,
   keplrDerviedState,
   mintedCountState,
   mintedTokenInfo,
