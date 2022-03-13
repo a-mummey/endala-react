@@ -1,20 +1,30 @@
+import { FaExternalLinkAlt, FaTrophy } from "react-icons/fa";
 import { useRecoilValueLoadable } from "recoil";
 import config from "../config";
 import {
   nftDetailsSelector,
   sortedMintedTokensSelector,
   tokenInfoSelector,
+  currentAccountSelector,
 } from "../state";
-import { imageUrl, thumbUrl } from "../utils/UrlHelper";
+import {
+  imageUrl,
+  stargazeMedia,
+  stargazeProfile,
+  thumbUrl,
+  shortAddress,
+} from "../utils/UrlHelper";
 import GalleryNav from "./GalleryNav";
 import NftAttributes from "./NftAttributes";
 import "./NftDetails.scss";
-import { stargazeMedia, stargazeProfile } from "../utils/UrlHelper";
-import { FaExternalLinkAlt, FaTrophy } from "react-icons/fa";
 
 function NftDetails({ tokenId }) {
   const tokenInfo =
     useRecoilValueLoadable(tokenInfoSelector(tokenId)).valueMaybe() || {};
+
+  const currentAccount = useRecoilValueLoadable(
+    currentAccountSelector
+  ).valueMaybe();
 
   const nftDetailsLoadable = useRecoilValueLoadable(
     nftDetailsSelector(tokenId)
@@ -47,7 +57,17 @@ function NftDetails({ tokenId }) {
 
     const ownedBy = tokenInfo.access ? (
       <p className="owner">
-        <small>Owner: {tokenInfo.access.owner}</small>
+        Owned By:{" "}
+        <a
+          href={stargazeProfile(tokenInfo.access.owner)}
+          rel="noreferrer"
+          target="_blank"
+        >
+          {currentAccount === tokenInfo.access.owner
+            ? "You"
+            : shortAddress(tokenInfo.access.owner)}{" "}
+          <FaExternalLinkAlt />
+        </a>
       </p>
     ) : (
       <></>

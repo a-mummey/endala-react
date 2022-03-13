@@ -19,6 +19,13 @@ const stargazeMedia = (tokenId) =>
 const stargazeProfile = (accountId) =>
   `${config.stargazeZone}/profile/${accountId}`;
 
+const shortAddress = (str) => {
+  if (str.length > 35) {
+    return str.substr(0, 10) + "…" + str.substr(str.length - 10, str.length);
+  }
+  return str;
+};
+
 export {
   thumbUrl,
   miniUrl,
@@ -29,4 +36,5 @@ export {
   siteImageUrl,
   stargazeMedia,
   stargazeProfile,
+  shortAddress,
 };
