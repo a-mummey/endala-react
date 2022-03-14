@@ -9,3 +9,6 @@
 .hero h2 {
   color: white;
 }
+.hero .sold-out {
+  margin: 0;
+}

@@ -25,7 +25,7 @@ function Hero() {
           role={"button"}
           className="mintButton"
         >
-          Mint on Stargaze
+          See on Stargaze
         </a>
       );
     } else {
@@ -57,7 +57,7 @@ function Hero() {
               <h1>Endala</h1>
               <h2>A Generative NFT Project on Stargaze</h2>
             </hgroup>
-            <small>Mint Cost: 250 STARS</small>
+            <h4 className="sold-out">Sold Out</h4>
             <p>
               <Countdown
                 renderer={renderer}
