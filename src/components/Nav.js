@@ -17,6 +17,9 @@ function Nav() {
           <Link to="/gallery">Gallery</Link>
         </li>
         <li>
+          <Link to="/rarities">Rarities</Link>
+        </li>
+        <li>
           <Link to="/about">About</Link>
         </li>
       </ul>

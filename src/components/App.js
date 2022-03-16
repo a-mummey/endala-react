@@ -10,6 +10,7 @@ import StateSubscriber from "./StateSubscriber";
 import Footer from "./Footer";
 import DebugPage from "../pages/DebugPage";
 import KeplrErrorModal from "../components/KeplrErrorModal";
+import Rarities from "./Rarities";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />}>
             <Route path="/gallery/:page" element={<Gallery />}></Route>
           </Route>
+          <Route path="/rarities" element={<Rarities />}></Route>
         </Routes>
       </BrowserRouter>
       <Footer></Footer>

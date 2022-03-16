@@ -126,8 +126,9 @@ const raritiesState = atom({
   key: "raritiesState",
   default: [],
   effects: [
-    async ({ setSelf, get }) => {
-      const { readOnlyClient } = get(keplrClientState);
+    async ({ setSelf }) => {
+      const { client, offlineSigner, readOnlyClient } =
+        await AsyncKeplrClient.getInstance();
       if (readOnlyClient) {
         const helper = new NftHelper({ readOnlyClient }, config);
         const rarities = await helper.getAllRarities();
